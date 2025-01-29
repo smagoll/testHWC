@@ -1,13 +1,9 @@
 ﻿public abstract class Ability
 {
+    public AbilityType AbilityType { get; protected set; }
     public string Name { get; protected set; }
     public int Cooldown { get; protected set; }
     public int CurrentCooldown { get; private set; }
-
-    public void Activate(UnitController user, UnitController target)
-    {
-        
-    }
 
     public void ReduceCooldown()
     {

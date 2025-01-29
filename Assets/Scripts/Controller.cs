@@ -5,20 +5,29 @@ public class Controller : MonoBehaviour
     [SerializeField]
     private UnitController unitControllerPrefab;
 
-    private Unit unit = new("Default", 30, new Ability[] { new Attack() });
+    private Unit _unit;
     
-    protected Player _player;
+    protected GameClient GameClient;
+
+    private UnitController unitController;
     
-    public void Init(Player player)
+    public void Init(GameClient gameClient, Unit unit)
     {
-        _player = player;
+        GameClient = gameClient;
+        _unit = unit;
         
         SpawnUnit();
     }
 
     private void SpawnUnit()
     {
-        var unitController = Instantiate(unitControllerPrefab, transform);
-        unitController.Init(unit);
+        unitController = Instantiate(unitControllerPrefab, transform);
+        unitController?.Init(_unit);
+    }
+
+    public void UseAbility(Ability ability, Unit target)
+    {
+        var request = new Request<AbilityUseEvent>("use_ability", new AbilityUseEvent(ability, _unit.Id, _unit.Id)).GetJson();
+        GameClient.SendRequest(request);
     }
 }

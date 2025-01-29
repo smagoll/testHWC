@@ -8,9 +8,9 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private Controller aiController;
 
-    public void SpawnBattle(Player player, Player enemy)
+    public void SpawnBattle(GameClient gameClient, Unit player, Unit enemy)
     {
-        controller.Init(player);
-        aiController.Init(player);
+        controller.Init(gameClient, player);
+        aiController.Init(gameClient, enemy);
     }
 }

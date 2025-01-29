@@ -1,33 +1,42 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    
     [SerializeField]
     private BattleSystem battleSystem;
     
     private GameServer gameServer;
     public IServerAdapter Adapter { get; private set; }
     
-    private Player player;
-    private Player enemy;
+    private GameClient _gameClient;
     
     private void Awake()
     {
         gameServer = new GameServer();
         Adapter = new ServerAdapter(gameServer);
 
-        player = new Player(Adapter);
-        enemy = new Player(Adapter);
+        _gameClient = new GameClient(Adapter);
+        
+        _gameClient.ServerAdapter.OnResponseHandler += Handle;
     }
 
-    private void Start()
+    private void Handle(string response)
     {
-        StartNewBattle();
+        var responseJson = JsonUtility.FromJson<ResponseEvent>(response);
+        
+        switch (responseJson._responseType)
+        {
+            case "start_battle":
+                StartNewBattle(responseJson._data);
+                break;
+        }
     }
-
-    public void StartNewBattle()
+    
+    private void StartNewBattle(string response)
     {
-        battleSystem.SpawnBattle(player, enemy);
+        var battleData = JsonUtility.FromJson<Battle>(response);
+        battleSystem.SpawnBattle(_gameClient, battleData._player, battleData._enemy);
     }
 }
