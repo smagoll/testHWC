@@ -1,6 +1,6 @@
 ﻿public class GameServer : IServerAdapter
 {
-    public void SendRequest(IGameEvent gameEvent)
+    public void HandleRequest<T>(T gameEvent)
     {
         
     }

@@ -3,8 +3,11 @@
     public string Name { get; protected set; }
     public int Cooldown { get; protected set; }
     public int CurrentCooldown { get; private set; }
-    
-    public abstract void Activate(UnitController user, UnitController target);
+
+    public void Activate(UnitController user, UnitController target)
+    {
+        
+    }
 
     public void ReduceCooldown()
     {

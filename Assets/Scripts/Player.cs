@@ -9,6 +9,6 @@
 
     public void SendRequest(IGameEvent gameEvent)
     {
-        _serverAdapter.SendRequest(gameEvent);
+        _serverAdapter.HandleRequest(gameEvent);
     }
 }

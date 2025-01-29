@@ -9,6 +9,11 @@
     
     public void SendRequest(IGameEvent gameEvent)
     {
-        _server.SendRequest(gameEvent);
+        _server.HandleRequest(gameEvent);
+    }
+
+    public void HandleRequest<T>(T gameEvent)
+    {
+        _server.HandleRequest (gameEvent);
     }
 }
