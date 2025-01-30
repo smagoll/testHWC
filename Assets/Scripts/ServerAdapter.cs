@@ -4,6 +4,8 @@ public class ServerAdapter : IServerAdapter
 {
     private IServerAdapter _server;
 
+    public Database Database { get; set; }
+
     public Action<string> OnResponseHandler
     {
         get => _server.OnResponseHandler;
@@ -23,5 +25,7 @@ public class ServerAdapter : IServerAdapter
     public ServerAdapter(IServerAdapter server)
     {
         _server = server;
+
+        Database = _server.Database;
     }
 }

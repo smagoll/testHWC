@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class GameServer : IServerAdapter
 {
+    public GameServer(Database database)
+    {
+        Database = database;
+    }
+    
     public Action<string> OnResponseHandler { get; set; }
 
     private Dictionary<RequestType, Handler> _abilityHandlers = new();
     
+    public Database Database { get; set; } // Симуляция базы данных
+
     public void HandleRequest(string request)
     {
         Debug.Log($"Сервер получил запрос: {request}");

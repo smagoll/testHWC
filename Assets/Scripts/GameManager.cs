@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
     [SerializeField]
-    private BattleSystem battleSystem;
+    private Database _database;
+    [FormerlySerializedAs("battleSystem")] [SerializeField]
+    private BattleSpawner battleSpawner;
     
     private GameServer gameServer;
     public IServerAdapter Adapter { get; private set; }
@@ -15,7 +18,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        gameServer = new GameServer();
+        gameServer = new GameServer(_database);
         Adapter = new ServerAdapter(gameServer);
 
         _gameClient = new GameClient(Adapter);
@@ -44,6 +47,6 @@ public class GameManager : MonoBehaviour
     private void StartNewBattle(string response)
     {
         var battleData = JsonUtility.FromJson<Battle>(response);
-        battleSystem.SpawnBattle(_gameClient, battleData._player, battleData._enemy);
+        battleSpawner.SpawnBattle(_gameClient, battleData._player, battleData._enemy);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BattleSystem : MonoBehaviour
+public class BattleSpawner : MonoBehaviour
 {
     [SerializeField]
     private UISystem uiSystem;
@@ -11,7 +11,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField]
     private Controller aiController;
 
-    public void SpawnBattle(GameClient gameClient, Unit player, Unit enemy)
+    public void SpawnBattle(GameClient gameClient, GameUnit player, GameUnit enemy)
     {
         controller.Init(gameClient, player, enemy);
         aiController.Init(gameClient, enemy, player);

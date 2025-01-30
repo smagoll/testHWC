@@ -1,37 +1,42 @@
-﻿using UnityEngine;
+﻿using Unity.Android.Gradle.Manifest;
+using UnityEngine;
 
-public class Controller : MonoBehaviour
+public abstract class Controller : MonoBehaviour
 {
     [SerializeField]
     private UnitController unitControllerPrefab;
 
-    private Unit _unit;
-    private Unit _enemy;
+    private GameUnit gameUnit;
+    private GameUnit _enemy;
     
     protected GameClient GameClient;
 
     private UnitController unitController;
 
-    public Unit Unit => _unit;
+    public GameUnit GameUnit => gameUnit;
     
-    public void Init(GameClient gameClient, Unit player, Unit enemy)
+    public void Init(GameClient gameClient, GameUnit player, GameUnit enemy)
     {
         GameClient = gameClient;
-        _unit = player;
+        gameUnit = player;
         _enemy = enemy;
         
         SpawnUnit();
+        
+        OnInit();
     }
+
+    protected abstract void OnInit();
 
     private void SpawnUnit()
     {
         unitController = Instantiate(unitControllerPrefab, transform);
-        unitController.Init(_unit);
+        unitController.Init(gameUnit);
     }
 
     public void UseAbility(Ability ability)
     {
-        var request = new RequestEvent(RequestType.UseAbility, new AbilityUseEvent(ability, _unit.id, _enemy.id)).GetJson();
+        var request = new RequestEvent(RequestType.UseAbility, new AbilityUseEvent(ability, gameUnit.id, _enemy.id)).GetJson();
         GameClient.SendRequest(request);
     }
 }

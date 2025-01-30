@@ -12,7 +12,7 @@ public class AbilityPanel : MonoBehaviour
     {
         _controller = controller;
         
-        SpawnAbilities(controller.Unit.abilities);
+        SpawnAbilities(controller.GameUnit.abilities);
     }
 
     private void SpawnAbilities(Ability[] abilities)
