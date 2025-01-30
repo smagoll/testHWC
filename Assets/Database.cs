@@ -12,6 +12,6 @@ public class Database : ScriptableObject
     {
         var abilityData = abilities.FirstOrDefault(x => x.abilityType == abilityType);
 
-        return abilityData != null ? new Ability(abilityData.title, abilityData.cooldown, abilityData.effects) : null;
+        return abilityData != null ? new Ability(abilityData.abilityType, abilityData.title, abilityData.damage, abilityData.cooldown, abilityData.effects) : null;
     }
 }

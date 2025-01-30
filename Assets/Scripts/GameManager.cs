@@ -4,8 +4,6 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
     [SerializeField]
     private Database _database;
     [FormerlySerializedAs("battleSystem")] [SerializeField]
@@ -39,14 +37,26 @@ public class GameManager : MonoBehaviour
         switch (responseJson._responseType)
         {
             case RequestType.StartBattle:
-                StartNewBattle(responseJson._data);
+                StartNewBattle(GetObject<Battle>(responseJson._data));
+                break;
+            case RequestType.UseAbility:
+                UpdateAbility(GetObject<Ability>(responseJson._data));
                 break;
         }
     }
-    
-    private void StartNewBattle(string response)
+
+    private T GetObject<T>(string json)
     {
-        var battleData = JsonUtility.FromJson<Battle>(response);
-        battleSpawner.SpawnBattle(_gameClient, battleData._player, battleData._enemy);
+        return JsonUtility.FromJson<T>(json);
+    }
+    
+    private void StartNewBattle(Battle battle)
+    {
+        battleSpawner.SpawnBattle(_gameClient, battle.player, battle.enemy);
+    }
+    
+    private void UpdateAbility(Ability ability)
+    {
+        battleSpawner.UISystem.AbilityPanel.UpdateAbility(ability);
     }
 }

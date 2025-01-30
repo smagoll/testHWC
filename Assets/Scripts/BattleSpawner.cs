@@ -3,19 +3,21 @@ using UnityEngine.Serialization;
 
 public class BattleSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private UISystem uiSystem;
+    [FormerlySerializedAs("uiSystem")] [SerializeField]
+    private UISystem _uiSystem;
     
-    [SerializeField]
-    private Controller controller;
-    [SerializeField]
-    private Controller aiController;
+    [FormerlySerializedAs("controller")] [SerializeField]
+    private Controller _controller;
+    [FormerlySerializedAs("aiController")] [SerializeField]
+    private Controller _aiController;
+
+    public UISystem UISystem => _uiSystem;
 
     public void SpawnBattle(GameClient gameClient, GameUnit player, GameUnit enemy)
     {
-        controller.Init(gameClient, player, enemy);
-        aiController.Init(gameClient, enemy, player);
+        _controller.Init(gameClient, player, enemy);
+        _aiController.Init(gameClient, enemy, player);
         
-        uiSystem.AbilityPanel.Init(controller);
+        _uiSystem.AbilityPanel.Init(_controller);
     }
 }

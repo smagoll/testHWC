@@ -16,6 +16,8 @@ public class AbilityController : MonoBehaviour
     private Controller _controller;
     private Ability _ability;
 
+    public AbilityType AbilityType { get; private set; }
+    
     private void Awake()
     {
         _button = GetComponent<Button>();
@@ -26,13 +28,18 @@ public class AbilityController : MonoBehaviour
         _ability = ability;
         _controller = controller;
         
-        name = ability.name;
-        titleText.text = ability.name;
-        
-        UpdateCooldown(0);
+        UpdateAbility(ability);
     }
 
-    public void UpdateCooldown(int cooldown)
+    public void UpdateAbility(Ability ability)
+    {
+        AbilityType = ability.abilityType;
+        name = ability.name;
+        titleText.text = ability.name;
+        UpdateCooldown(ability.currentCooldown);
+    }
+
+    private void UpdateCooldown(int cooldown)
     {
         if (cooldown > 0)
         {

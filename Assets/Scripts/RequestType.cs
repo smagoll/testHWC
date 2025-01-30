@@ -1,5 +1,7 @@
 ﻿public enum RequestType
 {
     UseAbility,
-    StartBattle
+    StartBattle,
+    UseEffect,
+    TakeDamage
 }

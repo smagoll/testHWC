@@ -14,6 +14,8 @@ public class GameServer : IServerAdapter
     private Dictionary<RequestType, Handler> _abilityHandlers = new();
     
     public Database Database { get; set; } // Симуляция базы данных
+    public BattleHandler BattleHandler { get; private set; }
+    public AbilityHandler AbilityHandler { get; private set; }
 
     public void HandleRequest(string request)
     {
@@ -43,8 +45,8 @@ public class GameServer : IServerAdapter
     {
         return requestType switch
         {
-            RequestType.UseAbility => new AbilityHandler(this),
-            RequestType.StartBattle => new BattleHandler(this),
+            RequestType.UseAbility => AbilityHandler = new AbilityHandler(this),
+            RequestType.StartBattle => BattleHandler = new BattleHandler(this),
             _ => throw new InvalidOperationException("Неизвестный тип запроса")
         };
     }

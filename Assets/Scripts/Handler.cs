@@ -1,10 +1,12 @@
 ﻿public abstract class Handler
 {
-    protected IServerAdapter _serverAdapter;
+    protected GameServer _gameServer;
+
+    public GameServer GameServer => _gameServer;
     
-    public Handler(IServerAdapter serverAdapter)
+    public Handler(GameServer gameServer)
     {
-        _serverAdapter = serverAdapter;
+        _gameServer = gameServer;
     }
     public abstract void Handle(string request);
 }

@@ -1,12 +1,17 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AbilityPanel : MonoBehaviour
 {
-    [SerializeField]
-    private AbilityController abilityController;
+    [FormerlySerializedAs("abilityController")] [SerializeField]
+    private AbilityController abilityControllerPrefab;
 
     private Controller _controller;
+
+    private List<AbilityController> abilityControllers = new();
 
     public void Init(Controller controller)
     {
@@ -19,8 +24,15 @@ public class AbilityPanel : MonoBehaviour
     {
         foreach (var ability in abilities)
         {
-            var abilityControllerGameObject = Instantiate(abilityController, transform);
-            abilityControllerGameObject.Init(ability, _controller);
+            var abilityController = Instantiate(abilityControllerPrefab, transform);
+            abilityController.Init(ability, _controller);
+            
+            abilityControllers.Add(abilityController);
         }
+    }
+
+    public void UpdateAbility(Ability ability)
+    {
+        abilityControllers.FirstOrDefault(x => x.AbilityType == ability.abilityType)?.UpdateAbility(ability);
     }
 }

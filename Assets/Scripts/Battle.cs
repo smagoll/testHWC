@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Linq;
+using UnityEngine.Serialization;
 
 [Serializable]
-public struct Battle
+public class Battle
 {
-    public GameUnit _player;
-    public GameUnit _enemy;
+    public GameUnit player;
+    public GameUnit enemy;
+
+    public GameUnit[] units;
 
     public Battle(GameUnit player, GameUnit enemy)
     {
-        _player = player;
-        _enemy = enemy;
+        this.player = player;
+        this.enemy = enemy;
+
+        units = new[] { player, enemy };
+    }
+    
+    public GameUnit GetUnit(Guid id)
+    {
+        return units.FirstOrDefault(x => x.id == id);
     }
 }
