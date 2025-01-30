@@ -4,6 +4,9 @@ using UnityEngine.Serialization;
 public class BattleSystem : MonoBehaviour
 {
     [SerializeField]
+    private UISystem uiSystem;
+    
+    [SerializeField]
     private Controller controller;
     [SerializeField]
     private Controller aiController;
@@ -12,5 +15,7 @@ public class BattleSystem : MonoBehaviour
     {
         controller.Init(gameClient, player);
         aiController.Init(gameClient, enemy);
+        
+        uiSystem.AbilityPanel.Init(controller);
     }
 }

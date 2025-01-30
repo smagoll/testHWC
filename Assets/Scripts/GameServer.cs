@@ -6,7 +6,7 @@ public class GameServer : IServerAdapter
 {
     public Action<string> OnResponseHandler { get; set; }
 
-    private Dictionary<string, Handler> _abilityHandlers = new();
+    private Dictionary<RequestType, Handler> _abilityHandlers = new();
     
     public void HandleRequest(string request)
     {
@@ -26,17 +26,18 @@ public class GameServer : IServerAdapter
     public void SendResponse(ResponseEvent responseEvent)
     {
         string response = JsonUtility.ToJson(responseEvent);
-        OnResponseHandler?.Invoke(response);
         
         Debug.Log($"Сервер отправил ответ: {response}");
+        
+        OnResponseHandler?.Invoke(response);
     }
 
-    private Handler CreateHandlerForRequest(string requestType)
+    private Handler CreateHandlerForRequest(RequestType requestType)
     {
         return requestType switch
         {
-            "use_ability" => new AbilityHandler(this),
-            "start_battle" => new BattleHandler(this),
+            RequestType.UseAbility => new AbilityHandler(this),
+            RequestType.StartBattle => new BattleHandler(this),
             _ => throw new InvalidOperationException("Неизвестный тип запроса")
         };
     }

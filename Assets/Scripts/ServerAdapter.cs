@@ -3,8 +3,13 @@
 public class ServerAdapter : IServerAdapter
 {
     private IServerAdapter _server;
-    
-    public Action<string> OnResponseHandler { get; set; }
+
+    public Action<string> OnResponseHandler
+    {
+        get => _server.OnResponseHandler;
+        set => _server.OnResponseHandler = value;
+    }
+
     public void HandleRequest(string request)
     {
         _server.HandleRequest(request);

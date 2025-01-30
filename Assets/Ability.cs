@@ -3,11 +3,16 @@
 [Serializable]
 public class Ability
 {
-    public AbilityType abilityType;
+    public AbilityType AbilityType { get; protected set; }
     public string name;
     public int cooldown;
     public int currentCooldown;
 
+    public Ability(AbilityType abilityType, string name, int cooldown)
+    {
+        
+    }
+    
     public void ReduceCooldown()
     {
         if (currentCooldown > 0)

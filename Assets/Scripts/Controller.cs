@@ -10,6 +10,8 @@ public class Controller : MonoBehaviour
     protected GameClient GameClient;
 
     private UnitController unitController;
+
+    public Unit Unit => _unit;
     
     public void Init(GameClient gameClient, Unit unit)
     {
@@ -22,12 +24,12 @@ public class Controller : MonoBehaviour
     private void SpawnUnit()
     {
         unitController = Instantiate(unitControllerPrefab, transform);
-        unitController?.Init(_unit);
+        unitController.Init(_unit);
     }
 
     public void UseAbility(Ability ability, Unit target)
     {
-        var request = new Request<AbilityUseEvent>("use_ability", new AbilityUseEvent(ability, _unit.id, _unit.id)).GetJson();
+        var request = new Request<AbilityUseEvent>(RequestType.UseAbility, new AbilityUseEvent(ability, _unit.id, target.id)).GetJson();
         GameClient.SendRequest(request);
     }
 }

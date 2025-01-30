@@ -1,14 +1,14 @@
-﻿using System;
-using Unity.VisualScripting;
+﻿
+using System;
 using UnityEngine;
 
 [Serializable]
 public class Request<T> where T : GameEvent
 {
-    public string _requestType;
+    public RequestType _requestType;
     public string _data;
 
-    public Request(string requestType, T data)
+    public Request(RequestType requestType, T data)
     {
         _requestType = requestType;
         _data = JsonUtility.ToJson(data);

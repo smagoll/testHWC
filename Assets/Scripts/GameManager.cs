@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
         
         _gameClient.ServerAdapter.OnResponseHandler += Handle;
 
-        var json = new Request<GameEvent>("start_battle", new GameEvent()).GetJson();
+        var json = new Request<GameEvent>(RequestType.StartBattle, new GameEvent()).GetJson();
         
         _gameClient.SendRequest(json);
     }
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         
         switch (responseJson._responseType)
         {
-            case "start_battle":
+            case RequestType.StartBattle:
                 StartNewBattle(responseJson._data);
                 break;
         }
