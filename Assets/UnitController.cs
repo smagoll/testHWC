@@ -8,8 +8,8 @@ public class UnitController : MonoBehaviour
     
     public void Init(Unit unit)
     {
-        _name = unit.Name;
-        _health = unit.Health;
-        _abilities = unit.Abilities;
+        _name = unit.name;
+        _health = unit.health;
+        _abilities = unit.abilities;
     }
 }

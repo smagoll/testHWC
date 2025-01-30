@@ -8,8 +8,8 @@ public class BattleHandler : Handler
 
     public override void Handle(string request)
     {
-        var player = new Unit("Default", 30, new[] { new Attack() });
-        var enemy = new Unit("Default", 30, new[] { new Attack() });
+        var player = new Unit("Default", 30, new Ability[] { new Attack() });
+        var enemy = new Unit("Default", 30, new Ability[] { new Attack() });
         var battle = new Battle(player , enemy);
         
         string json = JsonUtility.ToJson(battle);

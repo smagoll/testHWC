@@ -1,16 +1,18 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
+[Serializable]
 public class Unit
 {
-    public Guid Id = Guid.NewGuid();
-    public string Name { get; private set; }
-    public int Health { get; private set; }
-    public Ability[] Abilities { get; private set; }
+    public Guid id = Guid.NewGuid();
+    public string name;
+    public int health;
+    public Ability[] abilities;
 
-    public Unit(string name, int health, Attack[] abilities)
+    public Unit(string name, int health, Ability[] abilities)
     {
-        Name = name;
-        Health = health;
-        Abilities = abilities;
+        this.name = name;
+        this.health = health;
+        this.abilities = abilities;
     }
 }

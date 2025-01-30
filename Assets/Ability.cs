@@ -1,20 +1,23 @@
-﻿public abstract class Ability
+﻿using System;
+
+[Serializable]
+public class Ability
 {
-    public AbilityType AbilityType { get; protected set; }
-    public string Name { get; protected set; }
-    public int Cooldown { get; protected set; }
-    public int CurrentCooldown { get; private set; }
+    public AbilityType abilityType;
+    public string name;
+    public int cooldown;
+    public int currentCooldown;
 
     public void ReduceCooldown()
     {
-        if (CurrentCooldown > 0)
-            CurrentCooldown--;
+        if (currentCooldown > 0)
+            currentCooldown--;
     }
 
-    public bool IsReady() => CurrentCooldown == 0;
+    public bool IsReady() => currentCooldown == 0;
 
     protected void StartCooldown()
     {
-        CurrentCooldown = Cooldown;
+        currentCooldown = cooldown;
     }
 }

@@ -27,7 +27,7 @@ public class Controller : MonoBehaviour
 
     public void UseAbility(Ability ability, Unit target)
     {
-        var request = new Request<AbilityUseEvent>("use_ability", new AbilityUseEvent(ability, _unit.Id, _unit.Id)).GetJson();
+        var request = new Request<AbilityUseEvent>("use_ability", new AbilityUseEvent(ability, _unit.id, _unit.id)).GetJson();
         GameClient.SendRequest(request);
     }
 }

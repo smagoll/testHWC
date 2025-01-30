@@ -1,4 +1,6 @@
-﻿public class GameClient
+﻿using UnityEngine;
+
+public class GameClient
 {
     private readonly IServerAdapter _serverAdapter;
 
@@ -11,6 +13,8 @@
 
     public void SendRequest(string request)
     {
+        Debug.Log($"Клиент отправил запрос: {request}");
+        
         _serverAdapter.HandleRequest(request);
     }
 }

@@ -20,10 +20,16 @@ public class GameManager : MonoBehaviour
         _gameClient = new GameClient(Adapter);
         
         _gameClient.ServerAdapter.OnResponseHandler += Handle;
+
+        var json = new Request<GameEvent>("start_battle", new GameEvent()).GetJson();
+        
+        _gameClient.SendRequest(json);
     }
 
     private void Handle(string response)
     {
+        Debug.Log($"Клиент получил ответ: {response}");
+        
         var responseJson = JsonUtility.FromJson<ResponseEvent>(response);
         
         switch (responseJson._responseType)

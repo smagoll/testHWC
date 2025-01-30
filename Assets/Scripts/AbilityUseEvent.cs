@@ -14,8 +14,3 @@ public class  AbilityUseEvent : GameEvent
         _targetId = targetId;
     }
 }
-
-public class GameEvent
-{
-    
-}

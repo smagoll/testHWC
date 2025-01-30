@@ -10,6 +10,8 @@ public class GameServer : IServerAdapter
     
     public void HandleRequest(string request)
     {
+        Debug.Log($"Сервер получил запрос: {request}");
+        
         var requestJson = JsonUtility.FromJson<Request<GameEvent>>(request);
         // Если обработчик для этого типа не существует, создаем его
         if (!_abilityHandlers.ContainsKey(requestJson._requestType))
@@ -25,18 +27,17 @@ public class GameServer : IServerAdapter
     {
         string response = JsonUtility.ToJson(responseEvent);
         OnResponseHandler?.Invoke(response);
+        
+        Debug.Log($"Сервер отправил ответ: {response}");
     }
 
     private Handler CreateHandlerForRequest(string requestType)
     {
-        switch (requestType)
+        return requestType switch
         {
-            case "use_ability":
-                return new AbilityHandler(this);
-            case "start_battle":
-                return new BattleHandler(this);
-            default:
-                throw new InvalidOperationException("Неизвестный тип запроса");
-        }
+            "use_ability" => new AbilityHandler(this),
+            "start_battle" => new BattleHandler(this),
+            _ => throw new InvalidOperationException("Неизвестный тип запроса")
+        };
     }
 }
