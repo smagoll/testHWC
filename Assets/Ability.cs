@@ -1,54 +1,40 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class Ability
 {
-    public Action<Ability> OnUpdateState;
-    
     public AbilityType abilityType;
     public string name;
     public int damage;
+    public int maxCooldown;
     public int cooldown;
-    public int currentCooldown;
     public AbilityEffectType[] effects;
 
-    public bool IsReady
-    {
-        get => currentCooldown <= 0;
-        private set { }
-    }
+    public bool IsReady => cooldown == 0;
 
-    public Ability(AbilityType abilityType, string name, int damage, int cooldown, AbilityEffectType[] effects)
+    public Ability(AbilityType abilityType, string name, int damage, int maxCooldown, AbilityEffectType[] effects)
     {
+        this.abilityType = abilityType;
+        this.damage = damage;
         this.name = name;
-        this.cooldown = cooldown;
+        this.maxCooldown = maxCooldown;
         this.effects = effects;
     }
 
     public void ReduceCooldown()
     {
-        if (currentCooldown > 0)
+        if (cooldown > 0)
         {
-            currentCooldown--;
+            cooldown--;
         }
-        else
-        {
-            if (IsReady == false)
-            {
-                IsReady = true;
-            }
-        }
-        
-        //OnUpdateState?.Invoke(this);
     }
 
     public void Use()
     {
         if (IsReady)
         {
-            IsReady = false;
-            currentCooldown = cooldown;
-            OnUpdateState?.Invoke(this);
+            cooldown = maxCooldown;
         }
     }
 }

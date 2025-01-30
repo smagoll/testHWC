@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine.Serialization;
 
 [Serializable]
 public class GameUnit
 {
-    public Guid id = Guid.NewGuid();
+    public string id = Guid.NewGuid().ToString();
     public string name;
     public int health;
     public Ability[] abilities;
@@ -21,5 +22,10 @@ public class GameUnit
     {
         health -= damage;
         if (health < 0) IsDeath = true;
+    }
+
+    public Ability GetAbility(AbilityType abilityType)
+    {
+        return abilities.FirstOrDefault(x => x.abilityType == abilityType);
     }
 }

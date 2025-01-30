@@ -1,4 +1,7 @@
-﻿public class GameEvent
+﻿using System;
+
+[Serializable]
+public class GameEvent
 {
     
 }

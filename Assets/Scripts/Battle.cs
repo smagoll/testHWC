@@ -18,7 +18,7 @@ public class Battle
         units = new[] { player, enemy };
     }
     
-    public GameUnit GetUnit(Guid id)
+    public GameUnit GetUnit(string id)
     {
         return units.FirstOrDefault(x => x.id == id);
     }

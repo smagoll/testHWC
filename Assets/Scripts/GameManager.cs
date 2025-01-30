@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         
         _gameClient.ServerAdapter.OnResponseHandler += Handle;
 
-        var json = new RequestEvent(RequestType.StartBattle, new GameEvent()).GetJson();
+        var json = new RequestEvent(RequestType.StartBattle, "").GetJson();
         
         _gameClient.SendRequest(json);
     }

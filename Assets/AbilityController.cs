@@ -36,7 +36,7 @@ public class AbilityController : MonoBehaviour
         AbilityType = ability.abilityType;
         name = ability.name;
         titleText.text = ability.name;
-        UpdateCooldown(ability.currentCooldown);
+        UpdateCooldown(ability.cooldown);
     }
 
     private void UpdateCooldown(int cooldown)
@@ -67,7 +67,7 @@ public class AbilityController : MonoBehaviour
 
     private void UseAbility()
     {
-        _controller.UseAbility(_ability);
+        _controller.UseAbility(AbilityType);
     }
 
     private void OnEnable()

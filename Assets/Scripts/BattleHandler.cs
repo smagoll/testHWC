@@ -22,11 +22,6 @@ public class BattleHandler : Handler
             _gameServer.Database.GetAbility(AbilityType.FireBall),
             _gameServer.Database.GetAbility(AbilityType.Purge)
         };
-
-        foreach (var ability in abilities)
-        {
-            ability.OnUpdateState = EventBus.UseAbility;
-        }
         
         var player = new GameUnit("Default", 30, abilities);
         var enemy = new GameUnit("Default", 30, abilities);

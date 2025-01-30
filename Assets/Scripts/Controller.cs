@@ -34,9 +34,10 @@ public abstract class Controller : MonoBehaviour
         unitController.Init(gameUnit);
     }
 
-    public void UseAbility(Ability ability)
+    public void UseAbility(AbilityType abilityType)
     {
-        var request = new RequestEvent(RequestType.UseAbility, new AbilityUseEvent(ability, gameUnit.id, _enemy.id)).GetJson();
+        var jsonData = JsonUtility.ToJson(new AbilityUseEvent(abilityType, gameUnit.id, _enemy.id));
+        var request = new RequestEvent(RequestType.UseAbility, jsonData).GetJson();
         GameClient.SendRequest(request);
     }
 }

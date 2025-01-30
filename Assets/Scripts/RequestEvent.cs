@@ -8,10 +8,10 @@ public class RequestEvent
     public RequestType _requestType;
     public string _data;
 
-    public RequestEvent(RequestType requestType, object data)
+    public RequestEvent(RequestType requestType, string data)
     {
         _requestType = requestType;
-        _data = JsonUtility.ToJson(data);
+        _data = data;
     }
 
     public string GetJson()

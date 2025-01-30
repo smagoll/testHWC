@@ -9,12 +9,12 @@ public abstract class Command
         _gameServer = gameServer;
     }
     
-    public void Execute(Guid playerId, Guid targetId)
+    public void Execute(string playerId, string targetId)
     {
         Action(playerId, targetId);
         _gameServer.BattleHandler.Step();
     }
 
-    public abstract void Action(Guid playerId, Guid targetId);
+    public abstract void Action(string playerId, string targetId);
 
 }

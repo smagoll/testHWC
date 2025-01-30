@@ -2,7 +2,7 @@
 
 public class PurgeCommand : AbilityCommand
 {
-    public override void Action(Guid playerId, Guid targetId)
+    public override void Action(string playerId, string targetId)
     {
         
     }

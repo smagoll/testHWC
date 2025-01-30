@@ -15,13 +15,13 @@ public class AbilityHandler : Handler
     {
         var abilityEvent = JsonUtility.FromJson<AbilityUseEvent>(request);
         
-        if (!abilityCommands.ContainsKey(abilityEvent._ability.abilityType))
+        if (!abilityCommands.ContainsKey(abilityEvent._abilityType))
         {
-            AbilityCommand command = CreateCommand(abilityEvent._ability.abilityType);
-            abilityCommands[abilityEvent._ability.abilityType] = command;
+            AbilityCommand command = CreateCommand(abilityEvent._abilityType);
+            abilityCommands[abilityEvent._abilityType] = command;
         }
 
-        abilityCommands[abilityEvent._ability.abilityType].Execute(abilityEvent._playerId, abilityEvent._targetId);
+        abilityCommands[abilityEvent._abilityType].Execute(abilityEvent._playerId, abilityEvent._targetId);
     }
     
     private AbilityCommand CreateCommand(AbilityType abilityType)

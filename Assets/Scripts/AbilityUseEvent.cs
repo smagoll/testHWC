@@ -3,13 +3,13 @@
 [Serializable]
 public class  AbilityUseEvent : GameEvent
 {
-    public Ability _ability;
-    public Guid _playerId;
-    public Guid _targetId;
+    public AbilityType _abilityType;
+    public string _playerId;
+    public string _targetId;
 
-    public AbilityUseEvent(Ability ability, Guid playerId, Guid targetId)
+    public AbilityUseEvent(AbilityType abilityType, string playerId, string targetId)
     {
-        _ability = ability;
+        _abilityType = abilityType;
         _playerId = playerId;
         _targetId = targetId;
     }

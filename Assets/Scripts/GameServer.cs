@@ -29,7 +29,7 @@ public class GameServer : IServerAdapter
             _abilityHandlers[requestJson._requestType] = handler;
         }
 
-        _abilityHandlers[requestJson._requestType].Handle(request);
+        _abilityHandlers[requestJson._requestType].Handle(requestJson._data);
     }
 
     public void SendResponse(ResponseEvent responseEvent)
