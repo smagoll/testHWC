@@ -6,6 +6,7 @@ public class Controller : MonoBehaviour
     private UnitController unitControllerPrefab;
 
     private Unit _unit;
+    private Unit _enemy;
     
     protected GameClient GameClient;
 
@@ -13,10 +14,11 @@ public class Controller : MonoBehaviour
 
     public Unit Unit => _unit;
     
-    public void Init(GameClient gameClient, Unit unit)
+    public void Init(GameClient gameClient, Unit player, Unit enemy)
     {
         GameClient = gameClient;
-        _unit = unit;
+        _unit = player;
+        _enemy = enemy;
         
         SpawnUnit();
     }
@@ -27,9 +29,9 @@ public class Controller : MonoBehaviour
         unitController.Init(_unit);
     }
 
-    public void UseAbility(Ability ability, Unit target)
+    public void UseAbility(Ability ability)
     {
-        var request = new Request<AbilityUseEvent>(RequestType.UseAbility, new AbilityUseEvent(ability, _unit.id, target.id)).GetJson();
+        var request = new RequestEvent(RequestType.UseAbility, new AbilityUseEvent(ability, _unit.id, _enemy.id)).GetJson();
         GameClient.SendRequest(request);
     }
 }

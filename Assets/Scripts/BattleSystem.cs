@@ -13,8 +13,8 @@ public class BattleSystem : MonoBehaviour
 
     public void SpawnBattle(GameClient gameClient, Unit player, Unit enemy)
     {
-        controller.Init(gameClient, player);
-        aiController.Init(gameClient, enemy);
+        controller.Init(gameClient, player, enemy);
+        aiController.Init(gameClient, enemy, player);
         
         uiSystem.AbilityPanel.Init(controller);
     }

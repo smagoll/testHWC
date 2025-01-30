@@ -20,7 +20,7 @@ public class AbilityPanel : MonoBehaviour
         foreach (var ability in abilities)
         {
             var abilityControllerGameObject = Instantiate(abilityController, transform);
-            abilityControllerGameObject.Init(ability);
+            abilityControllerGameObject.Init(ability, _controller);
         }
     }
 }

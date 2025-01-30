@@ -12,7 +12,7 @@ public class GameServer : IServerAdapter
     {
         Debug.Log($"Сервер получил запрос: {request}");
         
-        var requestJson = JsonUtility.FromJson<Request<GameEvent>>(request);
+        var requestJson = JsonUtility.FromJson<RequestEvent>(request);
         // Если обработчик для этого типа не существует, создаем его
         if (!_abilityHandlers.ContainsKey(requestJson._requestType))
         {

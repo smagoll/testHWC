@@ -3,12 +3,12 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Request<T> where T : GameEvent
+public class RequestEvent
 {
     public RequestType _requestType;
     public string _data;
 
-    public Request(RequestType requestType, T data)
+    public RequestEvent(RequestType requestType, object data)
     {
         _requestType = requestType;
         _data = JsonUtility.ToJson(data);
