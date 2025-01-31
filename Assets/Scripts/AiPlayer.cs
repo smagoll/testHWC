@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,8 +15,10 @@ public class AiPlayer
         _selfId = selfId;
     }
     
-    public void OnStart()
+    public async void OnStart()
     {
+        await Task.Delay(1000);
+        
         if (_selfId.IsTurn)
         {
             var freeAbility = _enemyId.abilities.Where(x => x.IsReady).ToArray();
