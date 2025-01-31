@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
     
     private void UpdateBattleState(BattleState battleState)
     {
-        battleSystem.PlayerController.IsTurn = battleState.player;
-        battleSystem.EnemyController.IsTurn = battleState.enemy;
+        battleSystem.UpdateBattleState(battleState);
     }
 }

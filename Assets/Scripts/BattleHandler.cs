@@ -39,6 +39,7 @@ public class BattleHandler : Handler
     {
         steps++;
         _battle.SwitchState();
+        SendBattleState();
         
         if(steps % 2 == 0) UpdateStates();
     }

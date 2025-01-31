@@ -1,4 +1,4 @@
-﻿using Unity.Android.Gradle.Manifest;
+﻿using System;
 using UnityEngine;
 
 public abstract class Controller : MonoBehaviour
@@ -23,13 +23,20 @@ public abstract class Controller : MonoBehaviour
         _battleSystem = battleSystem;
         _selfUnit = player;
         _enemyUnit = enemy;
+
+        battleSystem.OnSwitchTurn += CheckTurn;
         
         SpawnUnit();
         
-        OnInit();
+        CheckTurn();
     }
 
-    protected abstract void OnInit();
+    private void CheckTurn()
+    {
+        if (IsTurn) OnStartTurn();
+    }
+
+    protected abstract void OnStartTurn();
 
     private void SpawnUnit()
     {

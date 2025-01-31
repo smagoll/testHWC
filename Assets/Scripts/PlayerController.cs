@@ -1,6 +1,6 @@
 ﻿public class PlayerController : Controller
 {
-    protected override void OnInit()
+    protected override void OnStartTurn()
     {
         
     }

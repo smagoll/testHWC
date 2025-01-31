@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BattleSystem : MonoBehaviour
 {
+    public Action OnSwitchTurn;
+    
     private GameClient _gameClient;
     
     [FormerlySerializedAs("uiSystem")] [SerializeField]
@@ -40,13 +43,13 @@ public class BattleSystem : MonoBehaviour
         var jsonData = JsonUtility.ToJson(new AbilityUseEvent(abilityType, selfId, targetId));
         var request = new RequestEvent(RequestType.UseAbility, jsonData).GetJson();
         _gameClient.SendRequest(request);
-        
-        SwitchTurn();
     }
     
-    public void SwitchTurn()
+    public void UpdateBattleState(BattleState battleState)
     {
-        _controller.IsTurn = !_controller.IsTurn;
-        _aiController.IsTurn = !_aiController.IsTurn;
+        _controller.IsTurn = battleState.player;
+        _aiController.IsTurn = battleState.enemy;
+        
+        OnSwitchTurn?.Invoke();
     }
 }
