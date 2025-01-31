@@ -7,6 +7,9 @@ public class GameServer : IServerAdapter
     public GameServer(Database database)
     {
         Database = database;
+
+        BattleHandler = new BattleHandler(this);
+        AbilityHandler = new AbilityHandler(this);
     }
     
     public Action<string> OnResponseHandler { get; set; }
@@ -45,8 +48,8 @@ public class GameServer : IServerAdapter
     {
         return requestType switch
         {
-            RequestType.UseAbility => AbilityHandler = new AbilityHandler(this),
-            RequestType.StartBattle => BattleHandler = new BattleHandler(this),
+            RequestType.UseAbility => AbilityHandler,
+            RequestType.StartBattle => BattleHandler,
             _ => throw new InvalidOperationException("Неизвестный тип запроса")
         };
     }

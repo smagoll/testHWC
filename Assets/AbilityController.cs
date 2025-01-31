@@ -50,7 +50,7 @@ public class AbilityController : MonoBehaviour
             Activate();
         }
         
-        cooldownText.text = $"KD: {cooldown}";
+        cooldownText.text = cooldown > 0 ? $"KD: {cooldown}" : "";
     }
 
     private void Activate()

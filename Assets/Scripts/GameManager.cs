@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     
     private void UpdateAbility(UpdateAbilityEvent updateAbilityEvent)
     {
-        battleSystem.UISystem.AbilityPanel.UpdateAbility(updateAbilityEvent.abilityType, updateAbilityEvent.cooldown);
+        battleSystem.UISystem.AbilityPanel.UpdateAbility(updateAbilityEvent.id, updateAbilityEvent.abilityType, updateAbilityEvent.cooldown);
     }
     
     private void UpdateUnit(UpdateUnitEvent updateUnitEvent)

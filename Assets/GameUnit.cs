@@ -31,6 +31,12 @@ public class GameUnit
         return abilities.FirstOrDefault(x => x.abilityType == abilityType);
     }
 
+    public void RemoveEffect(AbilityEffectType abilityEffectType)
+    {
+        var abilityEffect = effects.FirstOrDefault(x => x.abilityEffectType == abilityEffectType);
+        if (abilityEffect != null) effects.Remove(abilityEffect);
+    }
+    
     public void AddEffect(AbilityEffect abilityEffect)
     {
         effects.Add(abilityEffect);

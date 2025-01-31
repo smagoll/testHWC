@@ -9,19 +9,15 @@ public class AbilityHandler : Handler
     
     public AbilityHandler(GameServer gameServer) : base(gameServer)
     {
+        EventBus.UseAbility += UseAbility;
+        Debug.Log("add observer");
     }
     
     public override void Handle(string request)
     {
         var abilityEvent = JsonUtility.FromJson<AbilityUseEvent>(request);
         
-        if (!abilityCommands.ContainsKey(abilityEvent._abilityType))
-        {
-            AbilityCommand command = CreateCommand(abilityEvent._abilityType);
-            abilityCommands[abilityEvent._abilityType] = command;
-        }
-
-        abilityCommands[abilityEvent._abilityType].Execute(abilityEvent._playerId, abilityEvent._targetId);
+        UseAbility(abilityEvent._abilityType, abilityEvent._playerId, abilityEvent._targetId);
     }
     
     private AbilityCommand CreateCommand(AbilityType abilityType)
@@ -35,5 +31,16 @@ public class AbilityHandler : Handler
             AbilityType.Purge => new PurgeCommand(_gameServer),
             _ => throw new InvalidOperationException("Неизвестный тип способности")
         };
+    }
+
+    public void UseAbility(AbilityType abilityType, string playerId, string targetId)
+    {
+        if (!abilityCommands.ContainsKey(abilityType))
+        {
+            AbilityCommand command = CreateCommand(abilityType);
+            abilityCommands[abilityType] = command;
+        }
+
+        abilityCommands[abilityType].Execute(playerId, targetId);
     }
 }

@@ -2,17 +2,11 @@
 
 public class AttackCommand : AbilityCommand
 {
+    protected override AbilityType AbilityType => AbilityType.Attack;
+
     public override void Action(string playerId, string targetId)
     {
-        var targetUnit = _gameServer.BattleHandler.Battle.GetUnit(targetId);
-        var selfUnit = _gameServer.BattleHandler.Battle.GetUnit(targetId);
-        var ability = selfUnit.GetAbility(AbilityType.Attack);
-
-        if (ability == null) return;
-        if (!ability.IsReady) return;
-        
-        targetUnit.TakeDamage(ability.damage);
-        ability.Use();
+        TargetUnit.TakeDamage(Ability.damage);
     }
 
     public AttackCommand(GameServer gameServer) : base(gameServer)

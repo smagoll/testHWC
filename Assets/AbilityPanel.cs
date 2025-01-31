@@ -31,8 +31,8 @@ public class AbilityPanel : MonoBehaviour
         }
     }
 
-    public void UpdateAbility(AbilityType abilityType, int cooldown)
+    public void UpdateAbility(string id, AbilityType abilityType, int cooldown)
     {
-        abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
+        if (_controller.UnitController.Id == id) abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
     }
 }

@@ -38,10 +38,12 @@ public class BattleHandler : Handler
     public void Step()
     {
         steps++;
-        _battle.SwitchState();
-        SendBattleState();
         
         if(steps % 2 == 0) UpdateStates();
+        
+        _battle.SwitchState();
+        SendBattleState();
+        _battle.OnSwitchState?.Invoke();
     }
 
     private void UpdateStates()
@@ -51,13 +53,14 @@ public class BattleHandler : Handler
             foreach (var ability in gameUnit.abilities)
             {
                 ability.ReduceCooldown();
+                EventBus.UpdateAbility?.Invoke(gameUnit.id, ability.abilityType, ability.cooldown);
             }
         }
     }
     
-    private void SendResponseUpdateAbility(AbilityType abilityType, int cooldown)
+    private void SendResponseUpdateAbility(string id, AbilityType abilityType, int cooldown)
     {
-        UpdateAbilityEvent updateAbilityEvent = new UpdateAbilityEvent(abilityType, cooldown);
+        UpdateAbilityEvent updateAbilityEvent = new UpdateAbilityEvent(id, abilityType, cooldown);
         ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateAbility, JsonUtility.ToJson(updateAbilityEvent));
         _gameServer.SendResponse(responseEvent);
     }
@@ -65,6 +68,13 @@ public class BattleHandler : Handler
     private void SendResponseUpdateUnit(string id, int health)
     {
         UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health);
+        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
+        _gameServer.SendResponse(responseEvent);
+    }
+    
+    private void SendResponseUseAbility(AbilityType abilityType, string playerId, string enemyId)
+    {
+        AbilityUseEvent updateUnitEvent = new AbilityUseEvent(abilityType, playerId, enemyId);
         ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
         _gameServer.SendResponse(responseEvent);
     }

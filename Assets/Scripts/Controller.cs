@@ -33,7 +33,10 @@ public abstract class Controller : MonoBehaviour
 
     private void CheckTurn()
     {
-        if (IsTurn) OnStartTurn();
+        if (IsTurn)
+        {
+            OnStartTurn();
+        }
     }
 
     protected abstract void OnStartTurn();
