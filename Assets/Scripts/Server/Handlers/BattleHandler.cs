@@ -18,14 +18,12 @@ public class BattleHandler : Handler
         var player = new GameUnit("Default", 30, GetAbilities());
         var enemy = new GameUnit("Default", 30, GetAbilities());
         _battle = new Battle(player , enemy);
-        _battle.player.IsTurn = true;
         
         string jsonStart = JsonUtility.ToJson(_battle);
         ResponseEvent responseEventStart = new(RequestType.StartBattle, jsonStart);
         SendBattleState();
         
         _gameServer.SendResponse(responseEventStart);
-        
     }
 
     private void SendBattleState()
@@ -37,25 +35,9 @@ public class BattleHandler : Handler
     
     public void Step()
     {
-        steps++;
-        
-        if(steps % 2 == 0) UpdateStates();
-        
         _battle.SwitchState();
         SendBattleState();
         _battle.OnSwitchState?.Invoke();
-    }
-
-    private void UpdateStates()
-    {
-        foreach (var gameUnit in _battle.units)
-        {
-            foreach (var ability in gameUnit.abilities)
-            {
-                ability.ReduceCooldown();
-                EventBus.UpdateAbility?.Invoke(gameUnit.id, ability.abilityType, ability.cooldown);
-            }
-        }
     }
     
     private void SendResponseUpdateAbility(string id, AbilityType abilityType, int cooldown)
@@ -68,13 +50,6 @@ public class BattleHandler : Handler
     private void SendResponseUpdateUnit(string id, int health)
     {
         UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health);
-        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
-        _gameServer.SendResponse(responseEvent);
-    }
-    
-    private void SendResponseUseAbility(AbilityType abilityType, string playerId, string enemyId)
-    {
-        AbilityUseEvent updateUnitEvent = new AbilityUseEvent(abilityType, playerId, enemyId);
         ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
         _gameServer.SendResponse(responseEvent);
     }

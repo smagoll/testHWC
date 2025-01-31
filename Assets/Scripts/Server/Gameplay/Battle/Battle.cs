@@ -19,7 +19,11 @@ public class Battle
         this.player = player;
         this.enemy = enemy;
 
+        player.IsTurn = true;
+        
         _aiPlayer = new AiPlayer(enemy, player);
+        
+        OnSwitchState += UpdateAbilities;
         OnSwitchState += _aiPlayer.OnStart;
 
         units = new[] { player, enemy };
@@ -35,4 +39,16 @@ public class Battle
         player.IsTurn = !player.IsTurn;
         enemy.IsTurn = !enemy.IsTurn;
     }
+
+    private void UpdateAbilities()
+    {
+        if (player.IsTurn)
+        {
+            foreach (var ability in player.abilities)
+            {
+                EventBus.UpdateAbility?.Invoke(player.id, ability.abilityType, ability.cooldown);
+            }
+        }
+    }
 }
+

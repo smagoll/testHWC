@@ -40,6 +40,7 @@ public abstract class Controller : MonoBehaviour
     }
 
     protected abstract void OnStartTurn();
+    protected abstract void OnEndTurn();
 
     private void SpawnUnit()
     {
@@ -52,6 +53,7 @@ public abstract class Controller : MonoBehaviour
         if (IsTurn)
         {
             _battleSystem.UseAbility(abilityType, _selfUnit.id, _enemyUnit.id);
+            OnEndTurn();
         }
     }
 }

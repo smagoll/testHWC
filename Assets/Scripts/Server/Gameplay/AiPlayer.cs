@@ -17,13 +17,14 @@ public class AiPlayer
     
     public async void OnStart()
     {
-        await Task.Delay(1000);
-        
         if (_selfId.IsTurn)
         {
-            var freeAbility = _enemyId.abilities.Where(x => x.IsReady).ToArray();
+            await Task.Delay(1000);
+            Debug.Log("ai start");
+            var freeAbility = _selfId.abilities.Where(x => x.IsReady).ToArray();
             var rnd = Random.Range(0, freeAbility.Length);
             EventBus.UseAbility?.Invoke(freeAbility[rnd].abilityType, _selfId.id, _enemyId.id);
+            Debug.Log($"Ability{freeAbility[rnd].abilityType.ToString()}");
         }
     }
 }

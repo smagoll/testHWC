@@ -6,12 +6,23 @@ using UnityEngine.Serialization;
 [Serializable]
 public class GameUnit
 {
+    private bool _isTurn;
+    
     public string id = Guid.NewGuid().ToString();
     public string name;
     public int health;
     public Ability[] abilities;
     public List<AbilityEffect> effects = new();
-    public bool IsTurn { get; set; }
+
+    public bool IsTurn
+    {
+        get => _isTurn;
+        set
+        {
+            _isTurn = value;
+            if (value) UpdateAbility();
+        }
+    }
 
     public GameUnit(string name, int health, Ability[] abilities)
     {
@@ -20,6 +31,14 @@ public class GameUnit
         this.abilities = abilities;
     }
 
+    private void UpdateAbility()
+    {
+        foreach (var ability in abilities)
+        {
+            ability.ReduceCooldown();
+        }
+    }
+    
     public void TakeDamage(int damage)
     {
         health -= damage;

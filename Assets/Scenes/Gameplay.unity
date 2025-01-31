@@ -759,9 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf142de222a4a119dbb77d069522372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityPanel: {fileID: 2040656872}
-  playerHealth: {fileID: 0}
-  enemyHealth: {fileID: 0}
+  _abilityPanel: {fileID: 2040656872}
 --- !u!1 &1540351834
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +878,7 @@ GameObject:
   - component: {fileID: 2040656870}
   - component: {fileID: 2040656871}
   - component: {fileID: 2040656872}
+  - component: {fileID: 2040656873}
   m_Layer: 5
   m_Name: AbilityPanel
   m_TagString: Untagged
@@ -945,6 +944,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityControllerPrefab: {fileID: 3559318109088084990, guid: 8da3415c31ee18a48993a1c32a3093a6, type: 3}
+  _canvasGroup: {fileID: 2040656873}
+--- !u!225 &2040656873
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040656869}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -6,6 +6,11 @@ public class AIController : Controller
 {
     protected override void OnStartTurn()
     {
-        //StartCoroutine(Turn());
+        
+    }
+
+    protected override void OnEndTurn()
+    {
+        
     }
 }

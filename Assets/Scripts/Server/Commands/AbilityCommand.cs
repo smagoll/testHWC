@@ -22,7 +22,6 @@
         Action(playerId, targetId);
         
         Ability.Use();
-        EventBus.UpdateAbility?.Invoke(SelfUnit.id, Ability.abilityType, Ability.cooldown);
         _gameServer.BattleHandler.Step();
     }
 

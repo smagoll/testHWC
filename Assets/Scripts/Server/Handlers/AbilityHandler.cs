@@ -10,7 +10,6 @@ public class AbilityHandler : Handler
     public AbilityHandler(GameServer gameServer) : base(gameServer)
     {
         EventBus.UseAbility += UseAbility;
-        Debug.Log("add observer");
     }
     
     public override void Handle(string request)

@@ -8,7 +8,9 @@ public class AbilityPanel : MonoBehaviour
 {
     [FormerlySerializedAs("abilityController")] [SerializeField]
     private AbilityController abilityControllerPrefab;
-
+    [SerializeField]
+    private CanvasGroup _canvasGroup;
+    
     private Controller _controller;
 
     private List<AbilityController> abilityControllers = new();
@@ -33,6 +35,22 @@ public class AbilityPanel : MonoBehaviour
 
     public void UpdateAbility(string id, AbilityType abilityType, int cooldown)
     {
-        if (_controller.UnitController.Id == id) abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
+        if (_controller != null)
+        {
+            if (_controller.UnitController.Id == id) abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
+        }
+        
+    }
+    
+    public void Hide()
+    {
+        _canvasGroup.alpha = 0;
+        _canvasGroup.interactable = false;
+    }
+
+    public void Show()
+    {
+        _canvasGroup.alpha = 1;
+        _canvasGroup.interactable = true;
     }
 }

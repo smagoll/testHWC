@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Serializable]
-public class  AbilityUseEvent : GameEvent
+public class  AbilityUseEvent
 {
     public AbilityType _abilityType;
     public string _playerId;
