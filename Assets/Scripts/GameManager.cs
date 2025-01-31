@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
         _gameClient = new GameClient(Adapter);
         
+        battleSystem.Init(_gameClient);
+        
         _gameClient.ServerAdapter.OnResponseHandler += Handle;
 
         var json = new RequestEvent(RequestType.StartBattle, "").GetJson();
@@ -46,6 +48,9 @@ public class GameManager : MonoBehaviour
             case RequestType.UpdateUnit:
                 UpdateUnit(GetObject<UpdateUnitEvent>(responseJson._data));
                 break;
+            case RequestType.BattleState:
+                UpdateBattleState(GetObject<BattleState>(responseJson._data));
+                break;
         }
     }
 
@@ -68,5 +73,11 @@ public class GameManager : MonoBehaviour
     {
         var controller = battleSystem.Controllers.FirstOrDefault(x => x.UnitController.Id == updateUnitEvent.id);
         if (controller != null) controller.UnitController.UpdateHealth(updateUnitEvent.health);
+    }
+    
+    private void UpdateBattleState(BattleState battleState)
+    {
+        battleSystem.PlayerController.IsTurn = battleState.player;
+        battleSystem.EnemyController.IsTurn = battleState.enemy;
     }
 }

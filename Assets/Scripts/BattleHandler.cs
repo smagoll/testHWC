@@ -18,16 +18,27 @@ public class BattleHandler : Handler
         var player = new GameUnit("Default", 30, GetAbilities());
         var enemy = new GameUnit("Default", 30, GetAbilities());
         _battle = new Battle(player , enemy);
+        _battle.player.IsTurn = true;
         
-        string json = JsonUtility.ToJson(_battle);
-        ResponseEvent responseEvent = new(RequestType.StartBattle, json);
+        string jsonStart = JsonUtility.ToJson(_battle);
+        ResponseEvent responseEventStart = new(RequestType.StartBattle, jsonStart);
+        SendBattleState();
         
-        _gameServer.SendResponse(responseEvent);
+        _gameServer.SendResponse(responseEventStart);
+        
+    }
+
+    private void SendBattleState()
+    {
+        string jsonBattle = JsonUtility.ToJson(new BattleState(_battle.player.IsTurn, _battle.enemy.IsTurn));
+        ResponseEvent responseEventState = new(RequestType.BattleState, jsonBattle);
+        _gameServer.SendResponse(responseEventState);
     }
     
     public void Step()
     {
         steps++;
+        _battle.SwitchState();
         
         if(steps % 2 == 0) UpdateStates();
     }

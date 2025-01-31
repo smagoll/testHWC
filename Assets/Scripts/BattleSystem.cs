@@ -15,6 +15,9 @@ public class BattleSystem : MonoBehaviour
 
     public UISystem UISystem => _uiSystem;
 
+
+    public Controller PlayerController => _controller;
+    public Controller EnemyController => _aiController;
     public Controller[] Controllers { get; private set; }
 
     public void Init(GameClient gameClient)

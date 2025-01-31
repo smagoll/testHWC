@@ -22,4 +22,10 @@ public class Battle
     {
         return units.FirstOrDefault(x => x.id == id);
     }
+
+    public void SwitchState()
+    {
+        player.IsTurn = !player.IsTurn;
+        enemy.IsTurn = !enemy.IsTurn;
+    }
 }

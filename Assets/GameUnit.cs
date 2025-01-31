@@ -11,7 +11,7 @@ public class GameUnit
     public int health;
     public Ability[] abilities;
     public List<AbilityEffect> effects = new();
-    public bool IsDeath { get; private set; }
+    public bool IsTurn { get; set; }
 
     public GameUnit(string name, int health, Ability[] abilities)
     {
@@ -23,7 +23,6 @@ public class GameUnit
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health < 0) IsDeath = true;
         EventBus.UpdateUnit?.Invoke(id, health);
     }
 
