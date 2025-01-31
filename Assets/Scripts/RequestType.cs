@@ -3,5 +3,6 @@
     UseAbility,
     StartBattle,
     UseEffect,
-    TakeDamage
+    UpdateUnit,
+    UpdateAbility
 }

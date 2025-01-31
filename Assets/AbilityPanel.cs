@@ -17,7 +17,7 @@ public class AbilityPanel : MonoBehaviour
     {
         _controller = controller;
         
-        SpawnAbilities(controller.GameUnit.abilities);
+        SpawnAbilities(controller.SelfUnit.abilities);
     }
 
     private void SpawnAbilities(Ability[] abilities)
@@ -31,8 +31,8 @@ public class AbilityPanel : MonoBehaviour
         }
     }
 
-    public void UpdateAbility(Ability ability)
+    public void UpdateAbility(AbilityType abilityType, int cooldown)
     {
-        abilityControllers.FirstOrDefault(x => x.AbilityType == ability.abilityType)?.UpdateAbility(ability);
+        abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
     }
 }

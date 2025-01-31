@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private Database _database;
-    [FormerlySerializedAs("battleSystem")] [SerializeField]
-    private BattleSpawner battleSpawner;
+    [FormerlySerializedAs("battleSpawner")] [SerializeField]
+    private BattleSystem battleSystem;
     
     private GameServer gameServer;
     public IServerAdapter Adapter { get; private set; }
@@ -39,8 +40,11 @@ public class GameManager : MonoBehaviour
             case RequestType.StartBattle:
                 StartNewBattle(GetObject<Battle>(responseJson._data));
                 break;
-            case RequestType.UseAbility:
-                UpdateAbility(GetObject<Ability>(responseJson._data));
+            case RequestType.UpdateAbility:
+                UpdateAbility(GetObject<UpdateAbilityEvent>(responseJson._data));
+                break;
+            case RequestType.UpdateUnit:
+                UpdateUnit(GetObject<UpdateUnitEvent>(responseJson._data));
                 break;
         }
     }
@@ -52,11 +56,17 @@ public class GameManager : MonoBehaviour
     
     private void StartNewBattle(Battle battle)
     {
-        battleSpawner.SpawnBattle(_gameClient, battle.player, battle.enemy);
+        battleSystem.SpawnBattle(battle.player, battle.enemy);
     }
     
-    private void UpdateAbility(Ability ability)
+    private void UpdateAbility(UpdateAbilityEvent updateAbilityEvent)
     {
-        battleSpawner.UISystem.AbilityPanel.UpdateAbility(ability);
+        battleSystem.UISystem.AbilityPanel.UpdateAbility(updateAbilityEvent.abilityType, updateAbilityEvent.cooldown);
+    }
+    
+    private void UpdateUnit(UpdateUnitEvent updateUnitEvent)
+    {
+        var controller = battleSystem.Controllers.FirstOrDefault(x => x.UnitController.Id == updateUnitEvent.id);
+        if (controller != null) controller.UnitController.UpdateHealth(updateUnitEvent.health);
     }
 }

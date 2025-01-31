@@ -9,22 +9,14 @@ public class BattleHandler : Handler
     
     public BattleHandler(GameServer gameServer) : base(gameServer)
     {
-        EventBus.UseAbility += SendResponseUseAbility;
+        EventBus.UpdateAbility += SendResponseUpdateAbility;
+        EventBus.UpdateUnit += SendResponseUpdateUnit;
     }
 
     public override void Handle(string request)
     {
-        var abilities = new Ability[]
-        {
-            _gameServer.Database.GetAbility(AbilityType.Attack),
-            _gameServer.Database.GetAbility(AbilityType.Barrier),
-            _gameServer.Database.GetAbility(AbilityType.Regen),
-            _gameServer.Database.GetAbility(AbilityType.FireBall),
-            _gameServer.Database.GetAbility(AbilityType.Purge)
-        };
-        
-        var player = new GameUnit("Default", 30, abilities);
-        var enemy = new GameUnit("Default", 30, abilities);
+        var player = new GameUnit("Default", 30, GetAbilities());
+        var enemy = new GameUnit("Default", 30, GetAbilities());
         _battle = new Battle(player , enemy);
         
         string json = JsonUtility.ToJson(_battle);
@@ -51,9 +43,31 @@ public class BattleHandler : Handler
         }
     }
     
-    private void SendResponseUseAbility(Ability ability)
+    private void SendResponseUpdateAbility(AbilityType abilityType, int cooldown)
     {
-        ResponseEvent responseEvent = new ResponseEvent(RequestType.UseAbility, JsonUtility.ToJson(ability));
+        UpdateAbilityEvent updateAbilityEvent = new UpdateAbilityEvent(abilityType, cooldown);
+        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateAbility, JsonUtility.ToJson(updateAbilityEvent));
         _gameServer.SendResponse(responseEvent);
+    }
+    
+    private void SendResponseUpdateUnit(string id, int health)
+    {
+        UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health);
+        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
+        _gameServer.SendResponse(responseEvent);
+    }
+
+    private Ability[] GetAbilities()
+    {
+        var abilities = new Ability[]
+        {
+            _gameServer.Database.GetAbility(AbilityType.Attack),
+            _gameServer.Database.GetAbility(AbilityType.Barrier),
+            _gameServer.Database.GetAbility(AbilityType.Regen),
+            _gameServer.Database.GetAbility(AbilityType.FireBall),
+            _gameServer.Database.GetAbility(AbilityType.Purge)
+        };
+
+        return abilities;
     }
 }

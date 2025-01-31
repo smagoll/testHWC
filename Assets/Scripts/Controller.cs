@@ -6,20 +6,23 @@ public abstract class Controller : MonoBehaviour
     [SerializeField]
     private UnitController unitControllerPrefab;
 
-    private GameUnit gameUnit;
-    private GameUnit _enemy;
+    private GameUnit _selfUnit;
+    private GameUnit _enemyUnit;
     
-    protected GameClient GameClient;
+    protected BattleSystem _battleSystem;
 
     private UnitController unitController;
 
-    public GameUnit GameUnit => gameUnit;
+    public GameUnit SelfUnit => _selfUnit;
+    public UnitController UnitController => unitController;
     
-    public void Init(GameClient gameClient, GameUnit player, GameUnit enemy)
+    public bool IsTurn { get; set; }
+    
+    public void Init(BattleSystem battleSystem, GameUnit player, GameUnit enemy)
     {
-        GameClient = gameClient;
-        gameUnit = player;
-        _enemy = enemy;
+        _battleSystem = battleSystem;
+        _selfUnit = player;
+        _enemyUnit = enemy;
         
         SpawnUnit();
         
@@ -31,13 +34,14 @@ public abstract class Controller : MonoBehaviour
     private void SpawnUnit()
     {
         unitController = Instantiate(unitControllerPrefab, transform);
-        unitController.Init(gameUnit);
+        unitController.Init(_selfUnit);
     }
 
     public void UseAbility(AbilityType abilityType)
     {
-        var jsonData = JsonUtility.ToJson(new AbilityUseEvent(abilityType, gameUnit.id, _enemy.id));
-        var request = new RequestEvent(RequestType.UseAbility, jsonData).GetJson();
-        GameClient.SendRequest(request);
+        if (IsTurn)
+        {
+            _battleSystem.UseAbility(abilityType, _selfUnit.id, _enemyUnit.id);
+        }
     }
 }

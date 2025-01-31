@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    private string _name;
+    [SerializeField]
+    private HealthBar healthBar;
+
+    private string _id;
     private int _health;
-    private Ability[] _abilities;
+
+    public string Id => _id;
     
     public void Init(GameUnit gameUnit)
     {
-        _name = gameUnit.name;
+        _id = gameUnit.id;
         _health = gameUnit.health;
-        _abilities = gameUnit.abilities;
+        
+        UpdateBar();
     }
+
+    public void UpdateHealth(int health)
+    {
+        _health = health;
+        UpdateBar();
+    }
+
+    private void UpdateBar() => healthBar.UpdateBar(_health);
 }

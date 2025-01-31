@@ -28,10 +28,10 @@ public class AbilityController : MonoBehaviour
         _ability = ability;
         _controller = controller;
         
-        UpdateAbility(ability);
+        SetAbility(ability);
     }
 
-    public void UpdateAbility(Ability ability)
+    private void SetAbility(Ability ability)
     {
         AbilityType = ability.abilityType;
         name = ability.name;
@@ -39,7 +39,7 @@ public class AbilityController : MonoBehaviour
         UpdateCooldown(ability.cooldown);
     }
 
-    private void UpdateCooldown(int cooldown)
+    public void UpdateCooldown(int cooldown)
     {
         if (cooldown > 0)
         {

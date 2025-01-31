@@ -27,6 +27,7 @@ public class Ability
         if (cooldown > 0)
         {
             cooldown--;
+            EventBus.UpdateAbility?.Invoke(abilityType, cooldown);
         }
     }
 
@@ -35,6 +36,7 @@ public class Ability
         if (IsReady)
         {
             cooldown = maxCooldown;
+            EventBus.UpdateAbility?.Invoke(abilityType, cooldown);
         }
     }
 }

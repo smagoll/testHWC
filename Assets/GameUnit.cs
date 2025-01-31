@@ -24,6 +24,7 @@ public class GameUnit
     {
         health -= damage;
         if (health < 0) IsDeath = true;
+        EventBus.UpdateUnit?.Invoke(id, health);
     }
 
     public Ability GetAbility(AbilityType abilityType)
