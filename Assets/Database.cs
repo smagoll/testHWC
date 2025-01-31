@@ -14,4 +14,11 @@ public class Database : ScriptableObject
 
         return abilityData != null ? new Ability(abilityData.abilityType, abilityData.title, abilityData.damage, abilityData.cooldown, abilityData.effects) : null;
     }
+    
+    public AbilityEffect GetEffect(AbilityEffectType abilityEffectType)
+    {
+        var abilityEffectData = abilityEffects.FirstOrDefault(x => x.abilityEffectType == abilityEffectType);
+
+        return abilityEffectData != null ? abilityEffectData.GetAbilityEffect() : null;
+    }
 }

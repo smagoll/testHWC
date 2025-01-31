@@ -1,8 +1,11 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "AbilityEffect/Regeneration")]
-public class RegenerationEffect : AbilityEffectData
+﻿public class RegenerationEffect : AbilityEffect
 {
-    public int count;
-    
+    public RegenerationEffect(AbilityEffectType abilityEffectType, string title, int duration, int count) : base(abilityEffectType, title, duration)
+    {
+    }
+
+    public override void Use(GameUnit unitId)
+    {
+        
+    }
 }

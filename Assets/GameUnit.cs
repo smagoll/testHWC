@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Serialization;
 
@@ -9,6 +10,7 @@ public class GameUnit
     public string name;
     public int health;
     public Ability[] abilities;
+    public List<AbilityEffect> effects = new();
     public bool IsDeath { get; private set; }
 
     public GameUnit(string name, int health, Ability[] abilities)
@@ -27,5 +29,18 @@ public class GameUnit
     public Ability GetAbility(AbilityType abilityType)
     {
         return abilities.FirstOrDefault(x => x.abilityType == abilityType);
+    }
+
+    public void AddEffect(AbilityEffect abilityEffect)
+    {
+        effects.Add(abilityEffect);
+    }
+
+    public void ApplyEffects()
+    {
+        foreach (var abilityEffect in effects)
+        {
+            abilityEffect.Use(this);
+        }
     }
 }
