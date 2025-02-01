@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96aa6846df194444af929a44fdd9393e, type: 3}
   m_Name: PeriodicDamage
   m_EditorClassIdentifier: 
-  abilityEffectType: 2
+  abilityEffectType: 3
   title: "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u0435\u0441\u043A\u0438\u0439
     \u0443\u0440\u043E\u043D"
   duration: 5
+  isSelf: 0
   damagePerStep: 1

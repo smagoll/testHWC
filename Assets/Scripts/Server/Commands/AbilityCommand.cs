@@ -1,29 +1,19 @@
-﻿public abstract class AbilityCommand : Command
+﻿public class AbilityCommand : Command
 {
-    protected AbilityCommand(GameServer gameServer) : base(gameServer)
+    public AbilityCommand(GameServer gameServer) : base(gameServer)
     {
     }
     
-    protected abstract AbilityType AbilityType { get; }
-    
-    protected GameUnit SelfUnit { get;  private set; }
-    protected GameUnit TargetUnit { get;  private set; }
-    protected Ability Ability { get;  private set; }
-    
-    public void Execute(string playerId, string targetId)
+    public void Execute(AbilityType abilityType, string selfId, string targetId)
     {
-        TargetUnit = _gameServer.BattleHandler.Battle.GetUnit(targetId);
-        SelfUnit = _gameServer.BattleHandler.Battle.GetUnit(playerId);
-        Ability = SelfUnit.GetAbility(AbilityType);
+        var targetUnit = _gameServer.BattleHandler.Battle.GetUnit(targetId);
+        var selfUnit = _gameServer.BattleHandler.Battle.GetUnit(selfId);
+        var ability = selfUnit.GetAbility(abilityType);
         
-        if (Ability == null) return;
-        if (!Ability.IsReady) return;
+        if (ability == null) return;
+        if (!ability.IsReady) return;
         
-        Action(playerId, targetId);
-        
-        Ability.Use();
+        ability.Use(selfUnit, targetUnit);
         _gameServer.BattleHandler.Step();
     }
-
-    public abstract void Action(string playerId, string targetId);
 }

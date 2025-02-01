@@ -10,10 +10,10 @@ public class UnitController : MonoBehaviour
 
     public string Id => _id;
     
-    public void Init(GameUnit gameUnit)
+    public void Init(GameUnitInfo gameUnitInfo)
     {
-        _id = gameUnit.id;
-        _health = gameUnit.health;
+        _id = gameUnitInfo.id;
+        _health = gameUnitInfo.health;
         
         UpdateBar();
     }

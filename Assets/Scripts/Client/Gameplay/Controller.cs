@@ -6,19 +6,19 @@ public abstract class Controller : MonoBehaviour
     [SerializeField]
     private UnitController unitControllerPrefab;
 
-    private GameUnit _selfUnit;
-    private GameUnit _enemyUnit;
+    private GameUnitInfo _selfUnit;
+    private GameUnitInfo _enemyUnit;
     
     protected BattleSystem _battleSystem;
 
     private UnitController unitController;
 
-    public GameUnit SelfUnit => _selfUnit;
+    public GameUnitInfo SelfUnit => _selfUnit;
     public UnitController UnitController => unitController;
     
     public bool IsTurn { get; set; }
     
-    public void Init(BattleSystem battleSystem, GameUnit player, GameUnit enemy)
+    public void Init(BattleSystem battleSystem, GameUnitInfo player, GameUnitInfo enemy)
     {
         _battleSystem = battleSystem;
         _selfUnit = player;

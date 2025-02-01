@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4022cc47f6174b98b22846419332afa5, type: 3}
   m_Name: Regeneration
   m_EditorClassIdentifier: 
-  abilityEffectType: 1
+  abilityEffectType: 2
   title: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F"
   duration: 3
+  isSelf: 1
   count: 2

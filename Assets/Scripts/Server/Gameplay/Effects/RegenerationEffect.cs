@@ -1,6 +1,6 @@
 ﻿public class RegenerationEffect : AbilityEffect
 {
-    public RegenerationEffect(AbilityEffectType abilityEffectType, string title, int duration, int count) : base(abilityEffectType, title, duration)
+    public RegenerationEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf, int count) : base(abilityEffectType, title, duration, isSelf)
     {
     }
 

@@ -46,9 +46,26 @@ public class Battle
         {
             foreach (var ability in player.abilities)
             {
-                EventBus.UpdateAbility?.Invoke(player.id, ability.abilityType, ability.cooldown);
+                EventBus.UpdateAbility?.Invoke(player.id, ability.AbilityType, ability.Cooldown);
             }
         }
+    }
+
+    public BattleState GetBattleState()
+    {
+        var playerInfo = GetUnitInfo(player);
+        var enemyInfo = GetUnitInfo(enemy);
+
+        return new BattleState(playerInfo, enemyInfo);
+    }
+
+    private GameUnitInfo GetUnitInfo(GameUnit gameUnit)
+    {
+        var abilities = gameUnit.abilities
+            .Select(x => new AbilityInfo(x.AbilityType, x.Title, x.Cooldown))
+            .ToArray();
+
+        return new GameUnitInfo(gameUnit.id, gameUnit.health, abilities, gameUnit.IsTurn);
     }
 }
 

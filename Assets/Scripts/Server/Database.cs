@@ -5,14 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Database")]
 public class Database : ScriptableObject
 {
-    public AbilityData[] abilities;
-    public AbilityEffectData[] abilityEffects;
+    [SerializeField]
+    private AbilityData[] abilities;
+    [SerializeField]
+    private AbilityEffectData[] abilityEffects;
 
     public Ability GetAbility(AbilityType abilityType)
     {
-        var abilityData = abilities.FirstOrDefault(x => x.abilityType == abilityType);
+        var abilityData = abilities.FirstOrDefault(x => x.AbilityType == abilityType);
 
-        return abilityData != null ? new Ability(abilityData.abilityType, abilityData.title, abilityData.damage, abilityData.cooldown, abilityData.effects) : null;
+        return abilityData != null ? abilityData.GetAbility(abilityEffects) : null;
     }
     
     public AbilityEffect GetEffect(AbilityEffectType abilityEffectType)

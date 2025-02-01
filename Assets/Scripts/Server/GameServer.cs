@@ -35,8 +35,11 @@ public class GameServer : IServerAdapter
         _abilityHandlers[requestJson._requestType].Handle(requestJson._data);
     }
 
-    public void SendResponse(ResponseEvent responseEvent)
+    public void SendResponse(RequestType requestType, object data)
     {
+        var jsonData = JsonUtility.ToJson(data);
+        ResponseEvent responseEvent = new ResponseEvent(requestType, jsonData);
+        
         string response = JsonUtility.ToJson(responseEvent);
         
         Debug.Log($"Сервер отправил ответ: {response}");

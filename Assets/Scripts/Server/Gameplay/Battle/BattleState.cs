@@ -3,10 +3,10 @@
 [Serializable]
 public struct BattleState
 {
-    public bool player;
-    public bool enemy;
+    public GameUnitInfo player;
+    public GameUnitInfo enemy;
 
-    public BattleState(bool player, bool enemy)
+    public BattleState(GameUnitInfo player, GameUnitInfo enemy)
     {
         this.player = player;
         this.enemy = enemy;

@@ -3,16 +3,22 @@
 [Serializable]
 public abstract class AbilityEffect
 {
-    public AbilityEffect(AbilityEffectType abilityEffectType, string title, int duration)
+    public AbilityEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf)
     {
-        this.abilityEffectType = abilityEffectType;
-        this.title = title;
-        this.duration = duration;
+        _abilityEffectType = abilityEffectType;
+        _title = title;
+        _duration = duration;
+        _isSelf = isSelf;
     }
 
-    public AbilityEffectType abilityEffectType;
-    public string title;
-    public int duration;
+    private AbilityEffectType _abilityEffectType;
+    private string _title;
+    private int _duration;
+    private bool _isSelf;
 
-    public abstract void Use(GameUnit unitId);
+    public AbilityEffectType AbilityEffectType => _abilityEffectType;
+    public string Title => _title;
+    public bool IsSelf => _isSelf;
+
+    public abstract void Use(GameUnit selfUnit);
 }

@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         switch (responseJson._responseType)
         {
             case RequestType.StartBattle:
-                StartNewBattle(GetObject<Battle>(responseJson._data));
+                StartNewBattle(GetObject<BattleState>(responseJson._data));
                 break;
             case RequestType.UpdateAbility:
                 UpdateAbility(GetObject<UpdateAbilityEvent>(responseJson._data));
@@ -59,9 +59,10 @@ public class GameManager : MonoBehaviour
         return JsonUtility.FromJson<T>(json);
     }
     
-    private void StartNewBattle(Battle battle)
+    private void StartNewBattle(BattleState battleState)
     {
-        battleSystem.SpawnBattle(battle.player, battle.enemy);
+        battleSystem.SpawnBattle(battleState);
+        UpdateBattleState(battleState);
     }
     
     private void UpdateAbility(UpdateAbilityEvent updateAbilityEvent)

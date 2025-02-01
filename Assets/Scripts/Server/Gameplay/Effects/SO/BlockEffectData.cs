@@ -7,6 +7,6 @@ public class BlockEffectData : AbilityEffectData
     
     public override AbilityEffect GetAbilityEffect()
     {
-        return new BlockEffect(abilityEffectType, title, duration, blockDamage);
+        return new BlockEffect(abilityEffectType, title, duration, isSelf, blockDamage);
     }
 }

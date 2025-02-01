@@ -1,40 +1,57 @@
-﻿using System;
-using UnityEngine.Serialization;
-
-[Serializable]
-public class Ability
+﻿public abstract class Ability
 {
-    public AbilityType abilityType;
-    public string name;
-    public int damage;
-    public int maxCooldown;
-    public int cooldown;
-    public AbilityEffectType[] effects;
+    private AbilityType _abilityType;
+    private string _title;
+    private int _maxCooldown;
+    private int _cooldown;
+    private AbilityEffect[] _effects;
 
-    public bool IsReady => cooldown == 0;
+    public AbilityType AbilityType => _abilityType;
+    public string Title => _title;
+    public int Cooldown => _cooldown;
 
-    public Ability(AbilityType abilityType, string name, int damage, int maxCooldown, AbilityEffectType[] effects)
+    public bool IsReady => _cooldown == 0;
+
+    protected Ability(AbilityType abilityType, string title, int maxCooldown, AbilityEffect[] effects)
     {
-        this.abilityType = abilityType;
-        this.damage = damage;
-        this.name = name;
-        this.maxCooldown = maxCooldown;
-        this.effects = effects;
+        _abilityType = abilityType;
+        _title = title;
+        _maxCooldown = maxCooldown;
+        _effects = effects;
     }
 
     public void ReduceCooldown()
     {
-        if (cooldown > 0)
+        if (_cooldown > 0)
         {
-            cooldown--;
+            _cooldown--;
         }
     }
 
-    public void Use()
+    public void Use(GameUnit selfUnit, GameUnit targetUnit)
     {
         if (IsReady)
         {
-            cooldown = maxCooldown;
+            _cooldown = _maxCooldown;
+            Action(selfUnit, targetUnit);
+            UseEffects(selfUnit, targetUnit);
         }
     }
+
+    private void UseEffects(GameUnit selfUnit, GameUnit targetUnit)
+    {
+        foreach (var abilityEffect in _effects)
+        {
+            if (abilityEffect.IsSelf)
+            {
+                selfUnit.AddEffect(abilityEffect);
+            }
+            else
+            {
+                targetUnit.AddEffect(abilityEffect);
+            }
+        }
+    }
+
+    protected abstract void Action(GameUnit selfUnit, GameUnit targetUnit);
 }

@@ -23,8 +23,8 @@ public class AiPlayer
             Debug.Log("ai start");
             var freeAbility = _selfId.abilities.Where(x => x.IsReady).ToArray();
             var rnd = Random.Range(0, freeAbility.Length);
-            EventBus.UseAbility?.Invoke(freeAbility[rnd].abilityType, _selfId.id, _enemyId.id);
-            Debug.Log($"Ability{freeAbility[rnd].abilityType.ToString()}");
+            EventBus.UseAbility?.Invoke(freeAbility[rnd].AbilityType, _selfId.id, _enemyId.id);
+            Debug.Log($"Ability{freeAbility[rnd].AbilityType.ToString()}");
         }
     }
 }

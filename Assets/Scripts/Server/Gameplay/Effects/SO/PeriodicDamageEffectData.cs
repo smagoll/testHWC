@@ -7,6 +7,6 @@ public class PeriodicDamageEffectData : AbilityEffectData
 
     public override AbilityEffect GetAbilityEffect()
     {
-        return new PeriodicDamageEffect(abilityEffectType, title, duration);
+        return new PeriodicDamageEffect(abilityEffectType, title, duration, isSelf);
     }
 }

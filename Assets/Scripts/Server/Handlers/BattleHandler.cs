@@ -19,18 +19,19 @@ public class BattleHandler : Handler
         var enemy = new GameUnit("Default", 30, GetAbilities());
         _battle = new Battle(player , enemy);
         
-        string jsonStart = JsonUtility.ToJson(_battle);
-        ResponseEvent responseEventStart = new(RequestType.StartBattle, jsonStart);
-        SendBattleState();
-        
-        _gameServer.SendResponse(responseEventStart);
+        SendBattleStart();
     }
 
+    private void SendBattleStart()
+    {
+        BattleState battleState = _battle.GetBattleState();
+        _gameServer.SendResponse(RequestType.StartBattle, battleState);
+    }
+    
     private void SendBattleState()
     {
-        string jsonBattle = JsonUtility.ToJson(new BattleState(_battle.player.IsTurn, _battle.enemy.IsTurn));
-        ResponseEvent responseEventState = new(RequestType.BattleState, jsonBattle);
-        _gameServer.SendResponse(responseEventState);
+        BattleState battleState = _battle.GetBattleState();
+        _gameServer.SendResponse(RequestType.BattleState, battleState);
     }
     
     public void Step()
@@ -43,20 +44,18 @@ public class BattleHandler : Handler
     private void SendResponseUpdateAbility(string id, AbilityType abilityType, int cooldown)
     {
         UpdateAbilityEvent updateAbilityEvent = new UpdateAbilityEvent(id, abilityType, cooldown);
-        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateAbility, JsonUtility.ToJson(updateAbilityEvent));
-        _gameServer.SendResponse(responseEvent);
+        _gameServer.SendResponse(RequestType.UpdateAbility, updateAbilityEvent);
     }
     
     private void SendResponseUpdateUnit(string id, int health)
     {
         UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health);
-        ResponseEvent responseEvent = new ResponseEvent(RequestType.UpdateUnit, JsonUtility.ToJson(updateUnitEvent));
-        _gameServer.SendResponse(responseEvent);
+        _gameServer.SendResponse(RequestType.UpdateUnit, updateUnitEvent);
     }
 
     private Ability[] GetAbilities()
     {
-        var abilities = new Ability[]
+        var abilities = new[]
         {
             _gameServer.Database.GetAbility(AbilityType.Attack),
             _gameServer.Database.GetAbility(AbilityType.Barrier),

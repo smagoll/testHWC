@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5205262956af4539a164290515022756, type: 3}
+  m_Script: {fileID: 11500000, guid: 941ef8ae88824827b5f2c6ffc122fa93, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: 
-  abilityType: 3
-  title: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0448\u0430\u0440"
+  _abilityType: 3
+  _title: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0448\u0430\u0440"
+  _cooldown: 6
+  _effects: 03000000
   damage: 5
-  cooldown: 6
-  effects: 02000000

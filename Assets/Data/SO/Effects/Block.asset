@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80478acc7f0e495fb9acff143781e51e, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
+  abilityEffectType: 1
   title: "\u0411\u043B\u043E\u043A"
   duration: 2
+  isSelf: 1
+  blockDamage: 0

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5205262956af4539a164290515022756, type: 3}
+  m_Script: {fileID: 11500000, guid: db9e0dd3579b456b83b0b1c015cce61a, type: 3}
   m_Name: Regeneration
   m_EditorClassIdentifier: 
-  abilityType: 2
-  title: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F"
-  cooldown: 5
-  effects: 01000000
+  _abilityType: 2
+  _title: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F"
+  _cooldown: 5
+  _effects: 02000000

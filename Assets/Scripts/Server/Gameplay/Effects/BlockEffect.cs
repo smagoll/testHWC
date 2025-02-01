@@ -2,12 +2,12 @@
 {
     public int BlockDamage { get; set; }
     
-    public BlockEffect(AbilityEffectType abilityEffectType, string title, int duration, int blockDamage) : base(abilityEffectType, title, duration)
+    public BlockEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf, int blockDamage) : base(abilityEffectType, title, duration, isSelf)
     {
         BlockDamage = blockDamage;
     }
-    
-    public override void Use(GameUnit unitId)
+
+    public override void Use(GameUnit selfUnit)
     {
         
     }

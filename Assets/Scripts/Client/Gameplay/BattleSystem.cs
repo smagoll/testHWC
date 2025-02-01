@@ -28,10 +28,10 @@ public class BattleSystem : MonoBehaviour
         _gameClient = gameClient;
     }
     
-    public void SpawnBattle(GameUnit player, GameUnit enemy)
+    public void SpawnBattle(BattleState battleState)
     {
-        _controller.Init(this, player, enemy);
-        _aiController.Init(this, enemy, player);
+        _controller.Init(this, battleState.player, battleState.enemy);
+        _aiController.Init(this, battleState.enemy, battleState.player);
         
         Controllers = new[] { _controller, _aiController };
         
@@ -47,8 +47,8 @@ public class BattleSystem : MonoBehaviour
     
     public void UpdateBattleState(BattleState battleState)
     {
-        _controller.IsTurn = battleState.player;
-        _aiController.IsTurn = battleState.enemy;
+        _controller.IsTurn = battleState.player.isTurn;
+        _aiController.IsTurn = battleState.enemy.isTurn;
         
         OnSwitchTurn?.Invoke();
     }

@@ -14,7 +14,6 @@ public class AbilityController : MonoBehaviour
     private Button _button;
     
     private Controller _controller;
-    private Ability _ability;
 
     public AbilityType AbilityType { get; private set; }
     
@@ -23,20 +22,19 @@ public class AbilityController : MonoBehaviour
         _button = GetComponent<Button>();
     }
 
-    public void Init(Ability ability, Controller controller)
+    public void Init(AbilityInfo abilityInfo, Controller controller)
     {
-        _ability = ability;
         _controller = controller;
         
-        SetAbility(ability);
+        SetAbility(abilityInfo);
     }
 
-    private void SetAbility(Ability ability)
+    private void SetAbility(AbilityInfo abilityInfo)
     {
-        AbilityType = ability.abilityType;
-        name = ability.name;
-        titleText.text = ability.name;
-        UpdateCooldown(ability.cooldown);
+        AbilityType = abilityInfo.abilityType;
+        name = abilityInfo.title;
+        titleText.text = abilityInfo.title;
+        UpdateCooldown(abilityInfo.cooldown);
     }
 
     public void UpdateCooldown(int cooldown)

@@ -17,9 +17,9 @@ public class ServerAdapter : IServerAdapter
         _server.HandleRequest(request);
     }
 
-    public void SendResponse(ResponseEvent responseEvent)
+    public void SendResponse(RequestType requestType, object data)
     {
-        _server.SendResponse(responseEvent);
+        _server.SendResponse(requestType, data);
     }
 
     public ServerAdapter(IServerAdapter server)

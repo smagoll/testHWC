@@ -47,13 +47,18 @@ public class GameUnit
 
     public Ability GetAbility(AbilityType abilityType)
     {
-        return abilities.FirstOrDefault(x => x.abilityType == abilityType);
+        return abilities.FirstOrDefault(x => x.AbilityType == abilityType);
     }
 
     public void RemoveEffect(AbilityEffectType abilityEffectType)
     {
-        var abilityEffect = effects.FirstOrDefault(x => x.abilityEffectType == abilityEffectType);
+        var abilityEffect = effects.FirstOrDefault(x => x.AbilityEffectType == abilityEffectType);
         if (abilityEffect != null) effects.Remove(abilityEffect);
+    }
+
+    public void ClearEffects()
+    {
+        effects.Clear();
     }
     
     public void AddEffect(AbilityEffect abilityEffect)

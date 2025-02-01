@@ -7,6 +7,6 @@ public class RegenerationEffectData : AbilityEffectData
 
     public override AbilityEffect GetAbilityEffect()
     {
-        return new RegenerationEffect(abilityEffectType, title, duration, count);
+        return new RegenerationEffect(abilityEffectType, title, duration, isSelf, count);
     }
 }

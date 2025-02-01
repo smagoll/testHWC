@@ -22,7 +22,7 @@ public class AbilityPanel : MonoBehaviour
         SpawnAbilities(controller.SelfUnit.abilities);
     }
 
-    private void SpawnAbilities(Ability[] abilities)
+    private void SpawnAbilities(AbilityInfo[] abilities)
     {
         foreach (var ability in abilities)
         {

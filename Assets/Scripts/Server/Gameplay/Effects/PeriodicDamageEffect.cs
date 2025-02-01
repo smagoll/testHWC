@@ -1,6 +1,6 @@
 ﻿public class PeriodicDamageEffect : AbilityEffect
 {
-    public PeriodicDamageEffect(AbilityEffectType abilityEffectType, string title, int duration) : base(abilityEffectType, title, duration)
+    public PeriodicDamageEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf) : base(abilityEffectType, title, duration, isSelf)
     {
     }
 
