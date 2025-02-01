@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "Abilities/Purge")]
 public class PurgeData : AbilityData
 {
-    public override Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects)
+    public override Ability GetAbility()
     {
-        return new Purge(abilityType, title, cooldown, abilityEffects);
+        return new Purge(_abilityType, _title, _cooldown, _effects);
     }
 }

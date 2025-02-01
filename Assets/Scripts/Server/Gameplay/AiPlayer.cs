@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class AiPlayer
@@ -15,16 +14,15 @@ public class AiPlayer
         _selfId = selfId;
     }
     
-    public async void OnStart()
+    public async void OnStart(CancellationTokenSource cts)
     {
         if (_selfId.IsTurn)
         {
             await Task.Delay(1000);
-            Debug.Log("ai start");
-            var freeAbility = _selfId.abilities.Where(x => x.IsReady).ToArray();
+            if (cts.IsCancellationRequested) return;
+            var freeAbility = _selfId.Abilities.Where(x => x.IsReady).ToArray();
             var rnd = Random.Range(0, freeAbility.Length);
-            EventBus.UseAbility?.Invoke(freeAbility[rnd].AbilityType, _selfId.id, _enemyId.id);
-            Debug.Log($"Ability{freeAbility[rnd].AbilityType.ToString()}");
+            ResponseEventBus.UseAbilityResponse?.Invoke(freeAbility[rnd].AbilityType, _selfId.Id, _enemyId.Id);
         }
     }
 }

@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "Abilities/Barrier")]
 public class BarrierData : AbilityData
 {
-    public override Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects)
+    public override Ability GetAbility()
     {
-        return new Barrier(abilityType, title, cooldown, abilityEffects);
+        return new Barrier(_abilityType, _title, _cooldown, _effects);
     }
 }

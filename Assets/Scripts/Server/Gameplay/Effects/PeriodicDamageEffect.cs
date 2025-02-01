@@ -1,11 +1,24 @@
 ﻿public class PeriodicDamageEffect : AbilityEffect
 {
-    public PeriodicDamageEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf) : base(abilityEffectType, title, duration, isSelf)
+    private int _damagePerTick;
+    
+    public PeriodicDamageEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf, int damagePerTick) : base(abilityEffectType, title, duration, isSelf)
     {
+        _damagePerTick = damagePerTick;
     }
 
-    public override void Use(GameUnit unitId)
+    protected override void OnStart(GameUnit selfUnit)
     {
         
+    }
+
+    protected override void OnEnd(GameUnit selfUnit)
+    {
+        
+    }
+
+    protected override void Action(GameUnit selfUnit)
+    {
+        selfUnit.TakeDamage(_damagePerTick);
     }
 }

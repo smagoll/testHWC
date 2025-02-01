@@ -4,7 +4,7 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshPro healthText;
+    private TextMeshProUGUI healthText;
 
     public void UpdateBar(int health)
     {

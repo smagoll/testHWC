@@ -17,4 +17,4 @@ MonoBehaviour:
     \u0443\u0440\u043E\u043D"
   duration: 5
   isSelf: 0
-  damagePerStep: 1
+  _damagePerTurn: 1

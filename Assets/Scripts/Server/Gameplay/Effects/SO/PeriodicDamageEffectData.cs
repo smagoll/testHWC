@@ -3,10 +3,11 @@
 [CreateAssetMenu(menuName = "AbilityEffect/PeriodicDamage")]
 public class PeriodicDamageEffectData : AbilityEffectData
 {
-    public int damagePerStep;
+    [SerializeField]
+    private int _damagePerTurn;
 
     public override AbilityEffect GetAbilityEffect()
     {
-        return new PeriodicDamageEffect(abilityEffectType, title, duration, isSelf);
+        return new PeriodicDamageEffect(abilityEffectType, title, duration, isSelf, _damagePerTurn);
     }
 }

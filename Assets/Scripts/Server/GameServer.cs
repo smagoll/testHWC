@@ -10,6 +10,7 @@ public class GameServer : IServerAdapter
 
         BattleHandler = new BattleHandler(this);
         AbilityHandler = new AbilityHandler(this);
+        EffectHandler = new EffectHandler(this);
     }
     
     public Action<string> OnResponseHandler { get; set; }
@@ -19,13 +20,14 @@ public class GameServer : IServerAdapter
     public Database Database { get; set; } // Симуляция базы данных
     public BattleHandler BattleHandler { get; private set; }
     public AbilityHandler AbilityHandler { get; private set; }
+    public EffectHandler EffectHandler { get; private set; }
 
     public void HandleRequest(string request)
     {
-        Debug.Log($"Сервер получил запрос: {request}");
+        //Debug.Log($"Сервер получил запрос: {request}");
         
         var requestJson = JsonUtility.FromJson<RequestEvent>(request);
-        // Если обработчик для этого типа не существует, создаем его
+        
         if (!_abilityHandlers.ContainsKey(requestJson._requestType))
         {
             Handler handler = CreateHandlerForRequest(requestJson._requestType);
@@ -42,7 +44,7 @@ public class GameServer : IServerAdapter
         
         string response = JsonUtility.ToJson(responseEvent);
         
-        Debug.Log($"Сервер отправил ответ: {response}");
+        //Debug.Log($"Сервер отправил ответ: {response}");
         
         OnResponseHandler?.Invoke(response);
     }
@@ -52,7 +54,7 @@ public class GameServer : IServerAdapter
         return requestType switch
         {
             RequestType.UseAbility => AbilityHandler,
-            RequestType.StartBattle => BattleHandler,
+            RequestType.BattleAction => BattleHandler,
             _ => throw new InvalidOperationException("Неизвестный тип запроса")
         };
     }

@@ -9,19 +9,19 @@ public class AbilityHandler : Handler
     
     public AbilityHandler(GameServer gameServer) : base(gameServer)
     {
-        EventBus.UseAbility += UseAbility;
+        ResponseEventBus.UseAbilityResponse += UseAbility;
         abilityCommand = new AbilityCommand(gameServer);
     }
     
     public override void Handle(string request)
     {
         var abilityEvent = JsonUtility.FromJson<AbilityUseEvent>(request);
-        
         UseAbility(abilityEvent._abilityType, abilityEvent._playerId, abilityEvent._targetId);
     }
 
-    private void UseAbility(AbilityType abilityType, string playerId, string targetId)
+    private void UseAbility(AbilityType abilityType, string selfId, string enemyId)
     {
-        abilityCommand.Execute(abilityType, playerId, targetId);
+        Debug.Log($"Ability{abilityType.ToString()}");
+        abilityCommand.Execute(abilityType, selfId, enemyId);
     }
 }

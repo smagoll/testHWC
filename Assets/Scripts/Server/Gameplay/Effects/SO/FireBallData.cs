@@ -6,8 +6,8 @@ public class FireBallData : AbilityData
     [SerializeField]
     private int damage;
 
-    public override Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects)
+    public override Ability GetAbility()
     {
-        return new FireBall(abilityType, title, cooldown, abilityEffects, damage);
+        return new FireBall(_abilityType, _title, _cooldown, _effects, damage);
     }
 }

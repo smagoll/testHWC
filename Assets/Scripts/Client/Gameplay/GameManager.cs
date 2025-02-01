@@ -26,30 +26,28 @@ public class GameManager : MonoBehaviour
         
         _gameClient.ServerAdapter.OnResponseHandler += Handle;
 
-        var json = new RequestEvent(RequestType.StartBattle, "").GetJson();
-        
-        _gameClient.SendRequest(json);
+        var json = new RequestEvent(RequestType.BattleAction, new BattleActionEvent(BattleActionType.Start)).GetJson();
+        SendRequest(json);
     }
+
+    public void SendRequest(string request) => _gameClient.SendRequest(request);
 
     private void Handle(string response)
     {
-        Debug.Log($"Клиент получил ответ: {response}");
+        //Debug.Log($"Клиент получил ответ: {response}");
         
         var responseJson = JsonUtility.FromJson<ResponseEvent>(response);
         
         switch (responseJson._responseType)
         {
-            case RequestType.StartBattle:
-                StartNewBattle(GetObject<BattleState>(responseJson._data));
-                break;
             case RequestType.UpdateAbility:
                 UpdateAbility(GetObject<UpdateAbilityEvent>(responseJson._data));
                 break;
             case RequestType.UpdateUnit:
                 UpdateUnit(GetObject<UpdateUnitEvent>(responseJson._data));
                 break;
-            case RequestType.BattleState:
-                UpdateBattleState(GetObject<BattleState>(responseJson._data));
+            case RequestType.BattleAction:
+                BattleAction(GetObject<BattleActionEvent>(responseJson._data));
                 break;
         }
     }
@@ -58,11 +56,36 @@ public class GameManager : MonoBehaviour
     {
         return JsonUtility.FromJson<T>(json);
     }
+
+    private void BattleAction(BattleActionEvent battleActionEvent)
+    {
+        BattleState battleState = battleActionEvent.battleState;
+        
+        switch (battleActionEvent.battleActionType)
+        {
+            case BattleActionType.Start:
+                StartNewBattle(battleState);
+                break;
+            case BattleActionType.End:
+                EndBattle(battleState);
+                break;
+            case BattleActionType.Update:
+                UpdateBattleState(battleState);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(battleActionEvent), battleActionEvent, null);
+        }
+    }
     
     private void StartNewBattle(BattleState battleState)
     {
         battleSystem.SpawnBattle(battleState);
         UpdateBattleState(battleState);
+    }
+
+    private void EndBattle(BattleState battleState)
+    {
+        battleSystem.ResetControllers();
     }
     
     private void UpdateAbility(UpdateAbilityEvent updateAbilityEvent)
@@ -72,8 +95,9 @@ public class GameManager : MonoBehaviour
     
     private void UpdateUnit(UpdateUnitEvent updateUnitEvent)
     {
+        if (battleSystem.Controllers == null) return;
         var controller = battleSystem.Controllers.FirstOrDefault(x => x.UnitController.Id == updateUnitEvent.id);
-        if (controller != null) controller.UnitController.UpdateHealth(updateUnitEvent.health);
+        if (controller != null) controller.UnitController.UpdateUnit(updateUnitEvent.health, updateUnitEvent.abilityEffects);
     }
     
     private void UpdateBattleState(BattleState battleState)

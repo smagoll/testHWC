@@ -14,7 +14,7 @@ public class Database : ScriptableObject
     {
         var abilityData = abilities.FirstOrDefault(x => x.AbilityType == abilityType);
 
-        return abilityData != null ? abilityData.GetAbility(abilityEffects) : null;
+        return abilityData != null ? abilityData.GetAbility() : null;
     }
     
     public AbilityEffect GetEffect(AbilityEffectType abilityEffectType)

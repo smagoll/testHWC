@@ -1,6 +1,6 @@
 ﻿public class Regeneration : Ability
 {
-    public Regeneration(AbilityType abilityType, string title, int maxCooldown, AbilityEffect[] effects) : base(abilityType, title, maxCooldown, effects)
+    public Regeneration(AbilityType abilityType, string title, int maxCooldown, AbilityEffectType[] effects) : base(abilityType, title, maxCooldown, effects)
     {
     }
 

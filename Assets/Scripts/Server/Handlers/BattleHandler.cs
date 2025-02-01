@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 
 public class BattleHandler : Handler
 {
@@ -9,11 +11,31 @@ public class BattleHandler : Handler
     
     public BattleHandler(GameServer gameServer) : base(gameServer)
     {
-        EventBus.UpdateAbility += SendResponseUpdateAbility;
-        EventBus.UpdateUnit += SendResponseUpdateUnit;
+        ResponseEventBus.UpdateAbilityResponse += SendResponseUpdateAbility;
+        ResponseEventBus.UpdateUnitResponse += SendResponseUpdateUnit;
     }
 
     public override void Handle(string request)
+    {
+        var battleActionEvent = JsonUtility.FromJson<BattleActionEvent>(request);
+        switch (battleActionEvent.battleActionType)
+        {
+            case BattleActionType.Start:
+                StartNewBattle();
+                break;
+            case BattleActionType.End:
+                break;
+            case BattleActionType.Restart:
+                BattleRestart();
+                break;
+            case BattleActionType.Update:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void StartNewBattle()
     {
         var player = new GameUnit("Default", 30, GetAbilities());
         var enemy = new GameUnit("Default", 30, GetAbilities());
@@ -22,23 +44,36 @@ public class BattleHandler : Handler
         SendBattleStart();
     }
 
-    private void SendBattleStart()
+    private void SendBattleStart() => SendBattleAction(BattleActionType.Start);
+    private void SendBattleEnd() => SendBattleAction(BattleActionType.End);
+
+    private void BattleRestart()
     {
-        BattleState battleState = _battle.GetBattleState();
-        _gameServer.SendResponse(RequestType.StartBattle, battleState);
+        _battle.End();
+        SendBattleEnd();
+        StartNewBattle();
     }
-    
-    private void SendBattleState()
+    private void SendBattleUpdate() => SendBattleAction(BattleActionType.Update);
+
+    private void SendBattleAction(BattleActionType battleActionType)
     {
         BattleState battleState = _battle.GetBattleState();
-        _gameServer.SendResponse(RequestType.BattleState, battleState);
+        BattleActionEvent battleActionEvent = new BattleActionEvent(battleActionType, battleState);
+        _gameServer.SendResponse(RequestType.BattleAction, battleActionEvent);
     }
     
     public void Step()
     {
-        _battle.SwitchState();
-        SendBattleState();
-        _battle.OnSwitchState?.Invoke();
+        if (_battle.player.Health > 0 && _battle.enemy.Health > 0)
+        {
+            _battle.SwitchState();
+            SendBattleUpdate();
+            _battle.OnSwitchState?.Invoke();
+        }
+        else
+        {
+            BattleRestart();
+        }
     }
     
     private void SendResponseUpdateAbility(string id, AbilityType abilityType, int cooldown)
@@ -47,9 +82,13 @@ public class BattleHandler : Handler
         _gameServer.SendResponse(RequestType.UpdateAbility, updateAbilityEvent);
     }
     
-    private void SendResponseUpdateUnit(string id, int health)
+    private void SendResponseUpdateUnit(string id, int health, AbilityEffect[] abilityEffects)
     {
-        UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health);
+        var abilityEffectsInfo = abilityEffects
+            .Select(x => new AbilityEffectInfo(x.AbilityEffectType, x.Title, x.Duration))
+            .ToArray();
+        
+        UpdateUnitEvent updateUnitEvent = new UpdateUnitEvent(id, health, abilityEffectsInfo);
         _gameServer.SendResponse(RequestType.UpdateUnit, updateUnitEvent);
     }
 

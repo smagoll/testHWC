@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "Abilities/Regeneration")]
 public class RegenerationData : AbilityData
 {
-    public override Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects)
+    public override Ability GetAbility()
     {
-        return new Regeneration(abilityType, title, cooldown, abilityEffects);
+        return new Regeneration(_abilityType, _title, _cooldown, _effects);
     }
 }

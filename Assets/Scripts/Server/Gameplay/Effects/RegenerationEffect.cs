@@ -1,11 +1,24 @@
 ﻿public class RegenerationEffect : AbilityEffect
 {
-    public RegenerationEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf, int count) : base(abilityEffectType, title, duration, isSelf)
+    private int _countPerTurn;
+    
+    public RegenerationEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf, int countPerTurn) : base(abilityEffectType, title, duration, isSelf)
     {
+        _countPerTurn = countPerTurn;
     }
 
-    public override void Use(GameUnit unitId)
+    protected override void OnStart(GameUnit selfUnit)
     {
         
+    }
+
+    protected override void OnEnd(GameUnit selfUnit)
+    {
+        
+    }
+
+    protected override void Action(GameUnit selfUnit)
+    {
+        selfUnit.AddHealth(_countPerTurn);
     }
 }

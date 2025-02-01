@@ -2,7 +2,7 @@
 {
     private int _damage;
     
-    public Attack(AbilityType abilityType, string title, int maxCooldown, AbilityEffect[] effects, int damage) : base(abilityType, title, maxCooldown, effects)
+    public Attack(AbilityType abilityType, string title, int maxCooldown, AbilityEffectType[] effects, int damage) : base(abilityType, title, maxCooldown, effects)
     {
         _damage = damage;
     }

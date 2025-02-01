@@ -4,7 +4,7 @@
     private string _title;
     private int _maxCooldown;
     private int _cooldown;
-    private AbilityEffect[] _effects;
+    private AbilityEffectType[] _effects;
 
     public AbilityType AbilityType => _abilityType;
     public string Title => _title;
@@ -12,7 +12,7 @@
 
     public bool IsReady => _cooldown == 0;
 
-    protected Ability(AbilityType abilityType, string title, int maxCooldown, AbilityEffect[] effects)
+    protected Ability(AbilityType abilityType, string title, int maxCooldown, AbilityEffectType[] effects)
     {
         _abilityType = abilityType;
         _title = title;
@@ -42,14 +42,7 @@
     {
         foreach (var abilityEffect in _effects)
         {
-            if (abilityEffect.IsSelf)
-            {
-                selfUnit.AddEffect(abilityEffect);
-            }
-            else
-            {
-                targetUnit.AddEffect(abilityEffect);
-            }
+            GameplayEventBus.ApplyEffect?.Invoke(abilityEffect, selfUnit, targetUnit);
         }
     }
 

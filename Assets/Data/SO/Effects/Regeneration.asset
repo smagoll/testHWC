@@ -16,4 +16,4 @@ MonoBehaviour:
   title: "\u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F"
   duration: 3
   isSelf: 1
-  count: 2
+  _countPerTurn: 2

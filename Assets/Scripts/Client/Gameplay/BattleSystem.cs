@@ -17,10 +17,6 @@ public class BattleSystem : MonoBehaviour
     private Controller _aiController;
 
     public UISystem UISystem => _uiSystem;
-
-
-    public Controller PlayerController => _controller;
-    public Controller EnemyController => _aiController;
     public Controller[] Controllers { get; private set; }
 
     public void Init(GameClient gameClient)
@@ -30,8 +26,8 @@ public class BattleSystem : MonoBehaviour
     
     public void SpawnBattle(BattleState battleState)
     {
-        _controller.Init(this, battleState.player, battleState.enemy);
-        _aiController.Init(this, battleState.enemy, battleState.player);
+        _controller.Init(battleState.player, battleState.enemy);
+        _aiController.Init(battleState.enemy, battleState.player);
         
         Controllers = new[] { _controller, _aiController };
         
@@ -40,8 +36,8 @@ public class BattleSystem : MonoBehaviour
 
     public void UseAbility(AbilityType abilityType, string selfId, string targetId)
     {
-        var jsonData = JsonUtility.ToJson(new AbilityUseEvent(abilityType, selfId, targetId));
-        var request = new RequestEvent(RequestType.UseAbility, jsonData).GetJson();
+        var abilityUseEvent = new AbilityUseEvent(abilityType, selfId, targetId);
+        var request = new RequestEvent(RequestType.UseAbility, abilityUseEvent).GetJson();
         _gameClient.SendRequest(request);
     }
     
@@ -51,5 +47,17 @@ public class BattleSystem : MonoBehaviour
         _aiController.IsTurn = battleState.enemy.isTurn;
         
         OnSwitchTurn?.Invoke();
+    }
+
+    public void ResetControllers()
+    {
+        if (Controllers == null) return;
+        
+        foreach (var controller in Controllers)
+        {
+            controller.ResetController();
+        }
+        
+        _uiSystem.AbilityPanel.Hide();
     }
 }

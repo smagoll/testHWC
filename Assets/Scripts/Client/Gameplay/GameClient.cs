@@ -13,7 +13,7 @@ public class GameClient
 
     public void SendRequest(string request)
     {
-        Debug.Log($"Клиент отправил запрос: {request}");
+        //Debug.Log($"Клиент отправил запрос: {request}");
         
         _serverAdapter.HandleRequest(request);
     }

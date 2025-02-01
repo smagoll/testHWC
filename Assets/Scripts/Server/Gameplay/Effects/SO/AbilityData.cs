@@ -6,26 +6,15 @@ using UnityEngine;
 public abstract class AbilityData : ScriptableObject
 {
     [SerializeField]
-    private AbilityType _abilityType;
+    protected AbilityType _abilityType;
     [SerializeField]
-    private string _title;
+    protected string _title;
     [SerializeField]
-    private int _cooldown;
+    protected int _cooldown;
     [SerializeField]
-    private AbilityEffectType[] _effects;
+    protected AbilityEffectType[] _effects;
 
     public AbilityType AbilityType => _abilityType;
 
-    public Ability GetAbility(AbilityEffectData[] abilityEffectDatas)
-    {
-        var abilityEffects = _effects
-            .SelectMany(effectType => abilityEffectDatas
-                .Where(x => x.abilityEffectType == effectType)
-                .Select(x => x.GetAbilityEffect()))
-            .ToArray();
-        
-        return ConcreteAbility(_abilityType, _title, _cooldown, abilityEffects);
-    }
-
-    public abstract Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects);
+    public abstract Ability GetAbility();
 }

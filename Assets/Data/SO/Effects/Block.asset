@@ -16,4 +16,4 @@ MonoBehaviour:
   title: "\u0411\u043B\u043E\u043A"
   duration: 2
   isSelf: 1
-  blockDamage: 0
+  blockDamage: 5

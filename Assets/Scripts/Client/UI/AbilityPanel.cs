@@ -17,9 +17,13 @@ public class AbilityPanel : MonoBehaviour
 
     public void Init(Controller controller)
     {
+        ResetPanel();
+        
         _controller = controller;
         
         SpawnAbilities(controller.SelfUnit.abilities);
+        
+        Show();
     }
 
     private void SpawnAbilities(AbilityInfo[] abilities)
@@ -39,7 +43,6 @@ public class AbilityPanel : MonoBehaviour
         {
             if (_controller.UnitController.Id == id) abilityControllers.FirstOrDefault(x => x.AbilityType == abilityType)?.UpdateCooldown(cooldown);
         }
-        
     }
     
     public void Hide()
@@ -52,5 +55,15 @@ public class AbilityPanel : MonoBehaviour
     {
         _canvasGroup.alpha = 1;
         _canvasGroup.interactable = true;
+    }
+
+    private void ResetPanel()
+    {
+        foreach (var abilityController in abilityControllers)
+        {
+            Destroy(abilityController.gameObject);
+        }
+
+        abilityControllers = new();
     }
 }

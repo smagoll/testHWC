@@ -6,8 +6,8 @@ public class AttackData : AbilityData
     [SerializeField]
     private int damage;
 
-    public override Ability ConcreteAbility(AbilityType abilityType, string title, int cooldown, AbilityEffect[] abilityEffects)
+    public override Ability GetAbility()
     {
-        return new Attack(abilityType, title, cooldown, abilityEffects, damage);
+        return new Attack(_abilityType, _title, _cooldown, _effects, damage);
     }
 }

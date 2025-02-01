@@ -1,9 +1,7 @@
 ﻿public enum RequestType
 {
     UseAbility,
-    StartBattle,
-    BattleState,
-    UseEffect,
+    BattleAction,
     UpdateUnit,
     UpdateAbility
 }

@@ -9,6 +9,7 @@ public abstract class Controller : MonoBehaviour
     private GameUnitInfo _selfUnit;
     private GameUnitInfo _enemyUnit;
     
+    [SerializeField]
     protected BattleSystem _battleSystem;
 
     private UnitController unitController;
@@ -18,13 +19,10 @@ public abstract class Controller : MonoBehaviour
     
     public bool IsTurn { get; set; }
     
-    public void Init(BattleSystem battleSystem, GameUnitInfo player, GameUnitInfo enemy)
+    public void Init(GameUnitInfo player, GameUnitInfo enemy)
     {
-        _battleSystem = battleSystem;
         _selfUnit = player;
         _enemyUnit = enemy;
-
-        battleSystem.OnSwitchTurn += CheckTurn;
         
         SpawnUnit();
         
@@ -33,10 +31,7 @@ public abstract class Controller : MonoBehaviour
 
     private void CheckTurn()
     {
-        if (IsTurn)
-        {
-            OnStartTurn();
-        }
+        if (IsTurn) OnStartTurn();
     }
 
     protected abstract void OnStartTurn();
@@ -52,8 +47,23 @@ public abstract class Controller : MonoBehaviour
     {
         if (IsTurn)
         {
-            _battleSystem.UseAbility(abilityType, _selfUnit.id, _enemyUnit.id);
             OnEndTurn();
+            _battleSystem.UseAbility(abilityType, _selfUnit.id, _enemyUnit.id);
         }
+    }
+
+    public void ResetController()
+    {
+        Destroy(unitController.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        _battleSystem.OnSwitchTurn += CheckTurn;
+    }
+
+    private void OnDisable()
+    {
+        _battleSystem.OnSwitchTurn -= CheckTurn;
     }
 }

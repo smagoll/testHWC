@@ -2,8 +2,9 @@
 {
     private int _damage;
     
-    public FireBall(AbilityType abilityType, string title, int maxCooldown, AbilityEffect[] effects, int damage) : base(abilityType, title, maxCooldown, effects)
+    public FireBall(AbilityType abilityType, string title, int maxCooldown, AbilityEffectType[] effects, int damage) : base(abilityType, title, maxCooldown, effects)
     {
+        _damage = damage;
     }
 
     protected override void Action(GameUnit selfUnit, GameUnit targetUnit)
