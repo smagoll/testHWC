@@ -24,8 +24,6 @@ public class GameServer : IServerAdapter
 
     public void HandleRequest(string request)
     {
-        //Debug.Log($"Сервер получил запрос: {request}");
-        
         var requestJson = JsonUtility.FromJson<RequestEvent>(request);
         
         if (!_abilityHandlers.ContainsKey(requestJson._requestType))
@@ -43,8 +41,6 @@ public class GameServer : IServerAdapter
         ResponseEvent responseEvent = new ResponseEvent(requestType, jsonData);
         
         string response = JsonUtility.ToJson(responseEvent);
-        
-        //Debug.Log($"Сервер отправил ответ: {response}");
         
         OnResponseHandler?.Invoke(response);
     }

@@ -3,7 +3,7 @@
 [Serializable]
 public abstract class AbilityEffect
 {
-    public AbilityEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf)
+    protected AbilityEffect(AbilityEffectType abilityEffectType, string title, int duration, bool isSelf)
     {
         _abilityEffectType = abilityEffectType;
         _title = title;

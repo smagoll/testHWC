@@ -64,7 +64,7 @@ public class BattleHandler : Handler
     
     public void Step()
     {
-        if (_battle.player.Health > 0 && _battle.enemy.Health > 0)
+        if (_battle.Player.Health > 0 && _battle.Enemy.Health > 0)
         {
             _battle.SwitchState();
             SendBattleUpdate();

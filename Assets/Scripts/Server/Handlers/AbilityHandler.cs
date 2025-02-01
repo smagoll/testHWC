@@ -21,7 +21,6 @@ public class AbilityHandler : Handler
 
     private void UseAbility(AbilityType abilityType, string selfId, string enemyId)
     {
-        Debug.Log($"Ability{abilityType.ToString()}");
         abilityCommand.Execute(abilityType, selfId, enemyId);
     }
 }

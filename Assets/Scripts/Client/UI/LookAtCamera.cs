@@ -4,12 +4,12 @@ public class LookAtCamera : MonoBehaviour
 {
     private Camera mainCamera;
 
-    void Start()
+    private void Start()
     {
         mainCamera = Camera.main; // Получаем основную камеру
     }
 
-    void Update()
+    private void Update()
     {
         if (mainCamera != null)
         {

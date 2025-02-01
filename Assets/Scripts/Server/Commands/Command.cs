@@ -3,8 +3,8 @@
 public abstract class Command
 {
     protected GameServer _gameServer;
-    
-    public Command(GameServer gameServer)
+
+    protected Command(GameServer gameServer)
     {
         _gameServer = gameServer;
     }

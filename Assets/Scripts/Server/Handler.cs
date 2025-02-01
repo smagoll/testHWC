@@ -3,8 +3,8 @@
     protected GameServer _gameServer;
 
     public GameServer GameServer => _gameServer;
-    
-    public Handler(GameServer gameServer)
+
+    protected Handler(GameServer gameServer)
     {
         _gameServer = gameServer;
     }

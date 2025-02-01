@@ -11,10 +11,12 @@ public class Battle
     
     public Action OnSwitchState;
     
-    public GameUnit player;
-    public GameUnit enemy;
+    private GameUnit player;
+    private GameUnit enemy;
+    private GameUnit[] units;
 
-    public GameUnit[] units;
+    public GameUnit Player => player;
+    public GameUnit Enemy => enemy;
 
     private CancellationTokenSource cts;
 

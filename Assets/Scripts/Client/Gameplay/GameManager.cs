@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private BattleSystem battleSystem;
     
     private GameServer gameServer;
-    public IServerAdapter Adapter { get; private set; }
+    private IServerAdapter Adapter { get; set; }
     
     private GameClient _gameClient;
     
@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour
 
     private void Handle(string response)
     {
-        //Debug.Log($"Клиент получил ответ: {response}");
-        
         var responseJson = JsonUtility.FromJson<ResponseEvent>(response);
         
         switch (responseJson._responseType)
